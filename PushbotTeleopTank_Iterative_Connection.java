@@ -102,19 +102,49 @@ public class PushbotTeleopTank_Iterative_Connection extends OpMode{
         double left_x = gamepad1.left_stick_x;
         double right_x = gamepad1.right_stick_x;
 
-        if (gamepad2.right_bumper) {
-            armPosition += ARM_SPEED;
-            if (armPosition > 1.0) {
-                armPosition = 1.0;
-            }
-            robot.leftServoF.setPosition(armPosition);
+        if (gamepad2.a) {
+            robot.servoDoorF.setPosition(1);
         }
-        else if (gamepad2.left_bumper) {
-            armPosition -= ARM_SPEED;
-            if (armPosition < 0.0) {
-                armPosition = 0.0;
-            }
-            robot.leftServoF.setPosition(armPosition);
+        else if (gamepad2.b) {
+            robot.servoDoorF.setPosition(-1);
+        }
+
+        if (gamepad2.x) {
+            robot.servoDoorB.setPosition(1);
+        }
+        else if (gamepad2.y) {
+            robot.servoDoorB.setPosition(-1);
+        }
+
+        if (gamepad2.right_bumper) {
+            robot.elevatorsMotor.setPower(0.8);
+        }
+
+        else
+        {
+            robot.elevatorsMotor.setPower(0.0);
+        }
+
+        if (gamepad2.left_bumper)
+        {
+            robot.elevatorsMotor.setPower(-0.8);
+        }
+        else
+        {
+            robot.elevatorsMotor.setPower(0.0);
+        }
+
+        if (gamepad2.right_trigger <= 0.7 && gamepad2.right_trigger > 0.0)
+        {
+            robot.carrouselMotor.setPower(-0.8);
+        }
+        else if (gamepad2.right_trigger == 1.0)
+        {
+            robot.carrouselMotor.setPower(0.8);
+        }
+        else
+        {
+            robot.carrouselMotor.setPower(0);
         }
 
         if (gamepad1.b == true)
@@ -127,6 +157,7 @@ public class PushbotTeleopTank_Iterative_Connection extends OpMode{
         }
         else
         {
+            
 
             robot.leftDriveF.setPower(left_y);
             robot.rightDriveF.setPower(right_y);
@@ -134,18 +165,6 @@ public class PushbotTeleopTank_Iterative_Connection extends OpMode{
             robot.rightDriveB.setPower(right_y);
 
         }
-
-        if (gamepad2.a == true)
-        {
-            robot.rightArmF.setPower(0.5);
-        }
-        else if (gamepad2.b == true)
-        {
-            robot.rightArmF.setPower(-0.5);
-
-        }
-        else
-        {
 
             robot.leftDriveF.setPower(left_y);
             robot.rightDriveF.setPower(right_y);
@@ -173,10 +192,8 @@ public class PushbotTeleopTank_Iterative_Connection extends OpMode{
             robot.leftArm.setPower(0.0);*/
 
         // Send telemetry message to signify robot running;
-        telemetry.addData("claw",  "Offset = %.2f", clawOffset);
-        telemetry.addData("left",  "%.2f", left_y);
-        telemetry.addData("right", "%.2f", right_y);
-    }
+
+
 
     /*
      * Code to run ONCE after the driver hits STOP

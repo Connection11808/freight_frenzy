@@ -59,8 +59,10 @@ ConnectionHardware
     public DcMotor  rightDriveF  = null;
     public DcMotor  leftDriveB   = null;
     public DcMotor  rightDriveB  = null;
-    public DcMotor  rightArmF  = null;
-    public Servo  leftServoF  = null;
+    public DcMotor  elevatorsMotor = null;
+    public DcMotor  carrouselMotor = null;
+    public Servo servoDoorF = null;
+    public Servo servoDoorB = null;
 
     public static final double MID_SERVO       =  0.5 ;
     public static final double ARM_UP_POWER    =  0.45 ;
@@ -88,28 +90,33 @@ ConnectionHardware
         rightDriveF = hwMap.get(DcMotor.class, "RDF");
         leftDriveB  = hwMap.get(DcMotor.class, "LDB");
         rightDriveB = hwMap.get(DcMotor.class, "RDB");
-        rightArmF = hwMap.get(DcMotor.class, "RAF");
-        leftServoF = hwMap.get(Servo.class, "LSF");
+        elevatorsMotor = hwMap.get(DcMotor.class, "EM");
+        carrouselMotor = hwMap.get(DcMotor.class, "CM");
+        servoDoorF = hwMap.get(Servo.class, "SDF");
+        servoDoorB = hwMap.get(Servo.class, "SDB");
+
 
         leftDriveF.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDriveF.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         leftDriveB.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDriveB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
-        rightArmF.setDirection(DcMotor.Direction.FORWARD);
 
         leftDriveF.setPower(0);
         rightDriveF.setPower(0);
         leftDriveB.setPower(0);
         rightDriveB.setPower(0);
-        rightArmF.setPower(0);
+        elevatorsMotor.setPower(0);
+        carrouselMotor.setPower(0);
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightArmF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftServoF.setPosition(ARM_HOME);
+        elevatorsMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        carrouselMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        servoDoorF.setPosition(ARM_HOME);
+        servoDoorB.setPosition(ARM_HOME);
 
         // Define and initialize ALL installed servos.
         //leftClaw  = hwMap.get(Servo.class, "left_hand");
