@@ -27,13 +27,21 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.freight_frenzy;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 /**
  * This is NOT an opmode.
@@ -51,8 +59,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Servo channel:  Servo to open left claw:  "left_hand"
  * Servo channel:  Servo to open right claw: "right_hand"
  */
-public class
-ConnectionHardware
+public class ConnectionHardware
 {
     /* Public OpMode members. */
     public DcMotor  leftDriveF   = null;
@@ -63,6 +70,8 @@ ConnectionHardware
     public DcMotor  carrouselMotor = null;
     public Servo servoDoorF = null;
     public Servo servoDoorB = null;
+    // The IMU sensor object
+    private BNO055IMU imu;
 
     public static final double MID_SERVO       =  0.5 ;
     public static final double ARM_UP_POWER    =  0.45 ;
@@ -90,11 +99,10 @@ ConnectionHardware
         rightDriveF = hwMap.get(DcMotor.class, "RDF");
         leftDriveB  = hwMap.get(DcMotor.class, "LDB");
         rightDriveB = hwMap.get(DcMotor.class, "RDB");
-        elevatorsMotor = hwMap.get(DcMotor.class, "EM");
+        //elevatorsMotor = hwMap.get(DcMotor.class, "EM");
         carrouselMotor = hwMap.get(DcMotor.class, "CM");
-        servoDoorF = hwMap.get(Servo.class, "SDF");
-        servoDoorB = hwMap.get(Servo.class, "SDB");
-
+        //servoDoorF = hwMap.get(Servo.class, "SDF");
+        //servoDoorB = hwMap.get(Servo.class, "SDB");
 
         leftDriveF.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDriveF.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
@@ -105,7 +113,7 @@ ConnectionHardware
         rightDriveF.setPower(0);
         leftDriveB.setPower(0);
         rightDriveB.setPower(0);
-        elevatorsMotor.setPower(0);
+        //elevatorsMotor.setPower(0);
         carrouselMotor.setPower(0);
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -113,16 +121,20 @@ ConnectionHardware
         rightDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        elevatorsMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //elevatorsMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         carrouselMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        servoDoorF.setPosition(ARM_HOME);
-        servoDoorB.setPosition(ARM_HOME);
+        //servoDoorF.setPosition(ARM_HOME);
+        //servoDoorB.setPosition(ARM_HOME);
 
         // Define and initialize ALL installed servos.
         //leftClaw  = hwMap.get(Servo.class, "left_hand");
         //rightClaw = hwMap.get(Servo.class, "right_hand");
         //leftClaw.setPosition(MID_SERVO);
         //rightClaw.setPosition(MID_SERVO);
+
+        imu = hwMap.get(BNO055IMU.class, "imu ");
+        initImu();
+
 
         }
     public void sideDrive(double speed){
@@ -131,5 +143,31 @@ ConnectionHardware
         leftDriveF.setPower(speed);
         leftDriveB.setPower(-speed);
     }
- }
+
+    private boolean initImu(){
+        boolean sucses;
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        parameters.loggingEnabled      = true;
+        parameters.loggingTag          = "IMU";
+        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
+        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
+        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
+        // and named "imu".
+        sucses = imu.initialize(parameters);
+        return sucses;
+
+
+    }
+
+    public float GetImuAngle(){
+
+        Orientation angles =imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        return(AngleUnit.DEGREES.fromUnit(angles.angleUnit,angles.firstAngle));
+    }
+
+}
 

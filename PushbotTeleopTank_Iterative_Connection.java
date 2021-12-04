@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.freight_frenzy;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -97,17 +97,18 @@ public class PushbotTeleopTank_Iterative_Connection extends OpMode{
     @Override
     public void loop() {
         // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
-        double left_y = -gamepad1.left_stick_y;
-        double right_y = -gamepad1.right_stick_y;
-        double left_x = gamepad1.left_stick_x;
-        double right_x = gamepad1.right_stick_x;
+        double left_y = gamepad1.left_stick_y;
+        double right_y = gamepad1.right_stick_y;
+        double left_x = -gamepad1.left_stick_x;
+        double right_x = -gamepad1.right_stick_x;
 
-        if (gamepad2.a) {
+        /*if (gamepad2.a) {
             robot.servoDoorF.setPosition(1);
         }
         else if (gamepad2.b) {
             robot.servoDoorF.setPosition(-1);
         }
+
 
         if (gamepad2.x) {
             robot.servoDoorB.setPosition(1);
@@ -133,6 +134,7 @@ public class PushbotTeleopTank_Iterative_Connection extends OpMode{
         {
             robot.elevatorsMotor.setPower(0.0);
         }
+        */
 
         if (gamepad2.right_trigger <= 0.7 && gamepad2.right_trigger > 0.0)
         {
@@ -149,11 +151,11 @@ public class PushbotTeleopTank_Iterative_Connection extends OpMode{
 
         if (gamepad1.b == true)
         {
-            robot.sideDrive(1);
+            robot.sideDrive(0.8);
         }
         else if (gamepad1.a == true)
         {
-            robot.sideDrive(-1);
+            robot.sideDrive(-0.8);
         }
         else
         {

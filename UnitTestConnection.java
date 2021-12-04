@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.freight_frenzy;
 
 import android.util.Log;
 
@@ -50,7 +50,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  *
  * @see Telemetry
  */
-@TeleOp(name = "Concept: Telemetry", group = "Concept")
+@TeleOp(name = "Unit Test", group = "Concept")
 public class UnitTestConnection extends LinearOpMode  {
 
     private String TAG = "UnitTest";
@@ -59,6 +59,7 @@ public class UnitTestConnection extends LinearOpMode  {
 
     @Override public void runOpMode() {
         Log.d(TAG, "Wait for Start");
+        robot.init(hardwareMap);
         while (!isStarted()) {
 
         }
