@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.freight_frenzy;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -149,11 +149,11 @@ public class PushbotTeleopTank_Iterative_Connection extends OpMode{
             robot.carrouselMotor.setPower(0);
         }
 
-        if (gamepad1.b == true)
+        if (gamepad1.b)
         {
             robot.sideDrive(0.8);
         }
-        else if (gamepad1.a == true)
+        else if (gamepad1.a)
         {
             robot.sideDrive(-0.8);
         }

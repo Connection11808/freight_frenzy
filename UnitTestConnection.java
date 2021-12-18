@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.freight_frenzy;
+package org.firstinspires.ftc.teamcode;
 
 import android.util.Log;
 
@@ -80,7 +80,7 @@ public class UnitTestConnection extends LinearOpMode  {
                 Log.d(TAG, "rightDriveB Motor position is =" + robot.rightDriveB.getCurrentPosition());
             } else {
                 robot.rightDriveB.setPower(0);
-            }
+        }
 
             if (gamepad1.x == true) {
                 robot.leftDriveF.setPower(MotorSpeed);
@@ -94,24 +94,47 @@ public class UnitTestConnection extends LinearOpMode  {
                 Log.d(TAG, "leftDriveB Motor position is =" + robot.leftDriveB.getCurrentPosition());
             }
             else
-                {
-                    robot.leftDriveB.setPower(0);
-                }
-
-                if (gamepad1.right_bumper == true) {
-                    MotorSpeed = -MotorSpeed;
-                    Log.d(TAG, "The speed is = " + MotorSpeed);
-                }
-
-                if (gamepad1.left_bumper == true) {
-                    robot.leftDriveF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                    robot.leftDriveB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                    robot.rightDriveF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                    robot.rightDriveB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                    Log.d(TAG, "Reset Encoder all Motors");
-                }
+            {
+                robot.leftDriveB.setPower(0);
             }
-        }
+
+            if (gamepad1.right_bumper == true) {
+                MotorSpeed = -MotorSpeed;
+                Log.d(TAG, "The speed is = " + MotorSpeed);
+            }
+
+            if (gamepad1.dpad_up == true)
+            {
+                robot.leftDriveF.setPower(MotorSpeed);
+                robot.rightDriveF.setPower(MotorSpeed);
+                robot.leftDriveB.setPower(MotorSpeed);
+                robot.rightDriveB.setPower(MotorSpeed);
+                Log.d(TAG, "leftDriveF Motor position is =" + robot.leftDriveF.getCurrentPosition());
+                Log.d(TAG, "rightDriveF Motor position is =" + robot.rightDriveF.getCurrentPosition());
+                Log.d(TAG, "leftDriveB Motor position is =" + robot.leftDriveB.getCurrentPosition());
+                Log.d(TAG, "rightDriveB Motor position is =" + robot.rightDriveB.getCurrentPosition());
+            }
+            else
+            {
+                robot.leftDriveF.setPower(0);
+                robot.rightDriveF.setPower(0);
+                robot.leftDriveB.setPower(0);
+                robot.rightDriveB.setPower(0);
+            }
+
+            if (gamepad1.left_bumper == true) {
+                robot.leftDriveF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                robot.leftDriveB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                robot.rightDriveF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                robot.rightDriveB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                Log.d(TAG, "Reset Encoder all Motors");
+                robot.leftDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                robot.leftDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                robot.rightDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                robot.rightDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            }
+      }
+    }
 
 
 }

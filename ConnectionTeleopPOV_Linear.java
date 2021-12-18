@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.freight_frenzy;
+package org.firstinspires.ftc.teamcode;
 
 import android.util.Log;
 
@@ -111,17 +111,65 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
             else if (gamepad1.left_bumper)
                 clawOffset -= CLAW_SPEED;*/
 
-            if (gamepad1.b == true) {
-                robot.sideDrive(1);
+                  /*if (gamepad2.a) {
+            robot.servoDoorF.setPosition(1);
+        }
+        else if (gamepad2.b) {
+            robot.servoDoorF.setPosition(-1);
+        }
+
+
+        if (gamepad2.x) {
+            robot.servoDoorB.setPosition(1);
+        }
+        else if (gamepad2.y) {
+            robot.servoDoorB.setPosition(-1);
+        }
+
+        if (gamepad2.right_bumper) {
+            robot.elevatorsMotor.setPower(0.8);
+        }
+
+        else
+        {
+            robot.elevatorsMotor.setPower(0.0);
+        }
+
+        if (gamepad2.left_bumper)
+        {
+            robot.elevatorsMotor.setPower(-0.8);
+        }
+        else
+        {
+            robot.elevatorsMotor.setPower(0.0);
+        }
+        */
+
+            if (gamepad2.right_trigger <= 0.7 && gamepad2.right_trigger > 0.0)
+            {
+                robot.carrouselMotor.setPower(-0.8);
             }
-            else if (gamepad1.a == true) {
-                robot.sideDrive(-1);
+            else if (gamepad2.right_trigger == 1.0)
+            {
+                robot.carrouselMotor.setPower(0.8);
             }
-            else {
-                robot.leftDriveF.setPower(left);
-                robot.rightDriveF.setPower(right);
-                robot.leftDriveB.setPower(left);
-                robot.rightDriveB.setPower(right);
+            else
+            {
+                robot.carrouselMotor.setPower(0);
+            }
+
+            if (gamepad1.b)
+            {
+                robot.sideDrive(0.8);
+            }
+            else if (gamepad1.a)
+            {
+                robot.sideDrive(-0.8);
+            }
+            else
+            {
+                drive = -gamepad1.left_stick_y;
+                turn = gamepad1.right_stick_x;
             }
                 // Move both servos to new position.  Assume servos are mirror image of each other.
                 //clawOffset = Range.clip(clawOffset, -0.5, 0.5);

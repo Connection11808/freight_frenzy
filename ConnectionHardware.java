@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.freight_frenzy;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -117,6 +117,11 @@ public class ConnectionHardware
         carrouselMotor.setPower(0);
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
+        leftDriveF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDriveF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftDriveB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightDriveB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         leftDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -167,6 +172,13 @@ public class ConnectionHardware
 
         Orientation angles =imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         return(AngleUnit.DEGREES.fromUnit(angles.angleUnit,angles.firstAngle));
+    }
+
+    public double cm_to_inch (double cm)
+    {
+        double inch = cm * 0.393701;
+        return(inch);
+
     }
 
 }
