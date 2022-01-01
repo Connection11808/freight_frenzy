@@ -55,7 +55,7 @@ public class UnitTestConnection extends LinearOpMode  {
 
     private String TAG = "UnitTest";
     private ConnectionHardware robot = new ConnectionHardware();
-    private double MotorSpeed = 0.8;
+    private double MotorSpeed = 0.1;
 
     @Override public void runOpMode() {
         Log.d(TAG, "Wait for Start");
@@ -68,41 +68,6 @@ public class UnitTestConnection extends LinearOpMode  {
         // Go go gadget robot!
         while (opModeIsActive()) {
 
-            if (gamepad1.y == true) {
-                robot.rightDriveF.setPower(MotorSpeed);
-                Log.d(TAG, "rightDriveF Motor position is =" + robot.rightDriveF.getCurrentPosition());
-            } else {
-                robot.rightDriveF.setPower(0);
-            }
-
-            if (gamepad1.a == true) {
-                robot.rightDriveB.setPower(MotorSpeed);
-                Log.d(TAG, "rightDriveB Motor position is =" + robot.rightDriveB.getCurrentPosition());
-            } else {
-                robot.rightDriveB.setPower(0);
-        }
-
-            if (gamepad1.x == true) {
-                robot.leftDriveF.setPower(MotorSpeed);
-                Log.d(TAG, "leftDriveF Motor position is =" + robot.leftDriveF.getCurrentPosition());
-            } else {
-                robot.leftDriveF.setPower(0);
-            }
-
-            if (gamepad1.b == true) {
-                robot.leftDriveB.setPower(MotorSpeed);
-                Log.d(TAG, "leftDriveB Motor position is =" + robot.leftDriveB.getCurrentPosition());
-            }
-            else
-            {
-                robot.leftDriveB.setPower(0);
-            }
-
-            if (gamepad1.right_bumper == true) {
-                MotorSpeed = -MotorSpeed;
-                Log.d(TAG, "The speed is = " + MotorSpeed);
-            }
-
             if (gamepad1.dpad_up == true)
             {
                 robot.leftDriveF.setPower(MotorSpeed);
@@ -114,13 +79,54 @@ public class UnitTestConnection extends LinearOpMode  {
                 Log.d(TAG, "leftDriveB Motor position is =" + robot.leftDriveB.getCurrentPosition());
                 Log.d(TAG, "rightDriveB Motor position is =" + robot.rightDriveB.getCurrentPosition());
             }
-            else
+            else if (gamepad1.dpad_down == true)
             {
-                robot.leftDriveF.setPower(0);
-                robot.rightDriveF.setPower(0);
-                robot.leftDriveB.setPower(0);
-                robot.rightDriveB.setPower(0);
+                robot.leftDriveF.setPower(-MotorSpeed);
+                robot.rightDriveF.setPower(-MotorSpeed);
+                robot.leftDriveB.setPower(-MotorSpeed);
+                robot.rightDriveB.setPower(-MotorSpeed);
+                Log.d(TAG, "leftDriveF Motor position is =" + robot.leftDriveF.getCurrentPosition());
+                Log.d(TAG, "rightDriveF Motor position is =" + robot.rightDriveF.getCurrentPosition());
+                Log.d(TAG, "leftDriveB Motor position is =" + robot.leftDriveB.getCurrentPosition());
+                Log.d(TAG, "rightDriveB Motor position is =" + robot.rightDriveB.getCurrentPosition());
             }
+            else {
+
+                if (gamepad1.y == true) {
+                    robot.rightDriveF.setPower(MotorSpeed);
+                    Log.d(TAG, "rightDriveF Motor position is =" + robot.rightDriveF.getCurrentPosition());
+                } else {
+                    robot.rightDriveF.setPower(0);
+                }
+
+                if (gamepad1.a == true) {
+                    robot.rightDriveB.setPower(MotorSpeed);
+                    Log.d(TAG, "rightDriveB Motor position is =" + robot.rightDriveB.getCurrentPosition());
+                } else {
+                    robot.rightDriveB.setPower(0);
+                }
+
+                if (gamepad1.x == true) {
+                    robot.leftDriveF.setPower(MotorSpeed);
+                    Log.d(TAG, "leftDriveF Motor position is =" + robot.leftDriveF.getCurrentPosition());
+                } else {
+                    robot.leftDriveF.setPower(0);
+                }
+
+                if (gamepad1.b == true) {
+                    robot.leftDriveB.setPower(MotorSpeed);
+                    Log.d(TAG, "leftDriveB Motor position is =" + robot.leftDriveB.getCurrentPosition());
+                } else {
+                    robot.leftDriveB.setPower(0);
+                }
+            }
+
+            if (gamepad1.right_bumper == true) {
+                MotorSpeed = -MotorSpeed;
+                Log.d(TAG, "The speed is = " + MotorSpeed);
+            }
+
+
 
             if (gamepad1.left_bumper == true) {
                 robot.leftDriveF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

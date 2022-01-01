@@ -66,10 +66,10 @@ public class ConnectionHardware
     public DcMotor  rightDriveF  = null;
     public DcMotor  leftDriveB   = null;
     public DcMotor  rightDriveB  = null;
-    public DcMotor  elevatorsMotor = null;
+    public DcMotor  armMotor = null;
     public DcMotor  carrouselMotor = null;
-    public Servo servoDoorF = null;
-    public Servo servoDoorB = null;
+    public DcMotor  collectorMotor = null;
+    public Servo plierServo = null;
     // The IMU sensor object
     private BNO055IMU imu;
 
@@ -99,10 +99,10 @@ public class ConnectionHardware
         rightDriveF = hwMap.get(DcMotor.class, "RDF");
         leftDriveB  = hwMap.get(DcMotor.class, "LDB");
         rightDriveB = hwMap.get(DcMotor.class, "RDB");
-        //elevatorsMotor = hwMap.get(DcMotor.class, "EM");
+        armMotor = hwMap.get(DcMotor.class, "AM");
         carrouselMotor = hwMap.get(DcMotor.class, "CM");
-        //servoDoorF = hwMap.get(Servo.class, "SDF");
-        //servoDoorB = hwMap.get(Servo.class, "SDB");
+        collectorMotor = hwMap.get(DcMotor.class, "CLM");
+        plierServo = hwMap.get(Servo.class, "PS");
 
         leftDriveF.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDriveF.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
@@ -113,8 +113,10 @@ public class ConnectionHardware
         rightDriveF.setPower(0);
         leftDriveB.setPower(0);
         rightDriveB.setPower(0);
-        //elevatorsMotor.setPower(0);
+        armMotor.setPower(0);
         carrouselMotor.setPower(0);
+        collectorMotor.setPower(0);
+        plierServo.setPosition(0);
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftDriveF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -126,8 +128,9 @@ public class ConnectionHardware
         rightDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //elevatorsMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         carrouselMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        collectorMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //servoDoorF.setPosition(ARM_HOME);
         //servoDoorB.setPosition(ARM_HOME);
 

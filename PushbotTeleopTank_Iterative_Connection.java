@@ -102,39 +102,39 @@ public class PushbotTeleopTank_Iterative_Connection extends OpMode{
         double left_x = -gamepad1.left_stick_x;
         double right_x = -gamepad1.right_stick_x;
 
-        /*if (gamepad2.a) {
-            robot.servoDoorF.setPosition(1);
+        if (gamepad2.a) {
+            robot.plierServo.setPosition(1);
         }
         else if (gamepad2.b) {
-            robot.servoDoorF.setPosition(-1);
+            robot.plierServo.setPosition(-1);
         }
 
 
-        if (gamepad2.x) {
-            robot.servoDoorB.setPosition(1);
+        if (gamepad2.left_trigger > 0.5 && gamepad2.left_trigger <= 1.0) {
+            robot.collectorMotor.setPower(0.8);
         }
-        else if (gamepad2.y) {
-            robot.servoDoorB.setPosition(-1);
+        else {
+            robot.collectorMotor.setPower(0.0);
         }
 
         if (gamepad2.right_bumper) {
-            robot.elevatorsMotor.setPower(0.8);
+            robot.armMotor.setPower(0.6);
         }
 
         else
         {
-            robot.elevatorsMotor.setPower(0.0);
+            robot.armMotor.setPower(0.0);
         }
 
         if (gamepad2.left_bumper)
         {
-            robot.elevatorsMotor.setPower(-0.8);
+            robot.armMotor.setPower(-0.6);
         }
         else
         {
-            robot.elevatorsMotor.setPower(0.0);
+            robot.armMotor.setPower(0.0);
         }
-        */
+
 
         if (gamepad2.right_trigger <= 0.7 && gamepad2.right_trigger > 0.0)
         {
