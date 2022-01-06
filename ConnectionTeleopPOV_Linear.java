@@ -145,6 +145,40 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
         }
         */
 
+            if (gamepad2.a) {
+                robot.plierServo.setPosition(1);
+            }
+            else if (gamepad2.b) {
+                robot.plierServo.setPosition(-1);
+            }
+
+
+            if (gamepad2.left_trigger > 0.5 && gamepad2.left_trigger <= 1.0) {
+                robot.collectorMotor.setPower(0.8);
+            }
+            else {
+                robot.collectorMotor.setPower(0.0);
+            }
+
+            if (gamepad2.right_bumper) {
+                robot.armMotor.setPower(0.6);
+            }
+
+            else
+            {
+                robot.armMotor.setPower(0.0);
+            }
+
+            if (gamepad2.left_bumper)
+            {
+                robot.armMotor.setPower(-0.6);
+            }
+            else
+            {
+                robot.armMotor.setPower(0.0);
+            }
+
+
             if (gamepad2.right_trigger <= 0.7 && gamepad2.right_trigger > 0.0)
             {
                 robot.carrouselMotor.setPower(-0.8);

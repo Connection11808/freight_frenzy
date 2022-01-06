@@ -13,11 +13,11 @@ import com.qualcomm.robotcore.util.Range;
 @Autonomous(name="AutonomousConnection_Red", group="Pushbot")
 public class AutonomousConnection_Red extends LinearOpMode {
 
-    ImageProcessing imageProcessing = new ImageProcessing();
+    ImageProcessingRed imageProcessing = new ImageProcessingRed();
     PushbotAutoDriveByEncoder_Linear_Connection pushbotAutoDriveByEncoderLinearConnection = new PushbotAutoDriveByEncoder_Linear_Connection();
     ConnectionHardware robot       = new ConnectionHardware();
     private ElapsedTime     runtime = new ElapsedTime();
-    ImageProcessing.DuckPosition duckPosition;
+    ImageProcessingRed.DuckPositionRed duckPosition;
     private String TAG = "AutonomousConnection";
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
@@ -37,46 +37,43 @@ public class AutonomousConnection_Red extends LinearOpMode {
         telemetry.update();
         // Wait for the game to start (driver presses PLAY)
 
-    robot.init(hardwareMap);
+        robot.init(hardwareMap);
 
 
-    // Ensure the robot it stationary, then reset the encoders and calibrate the gyro.
-    //robot.leftDriveF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    //robot.rightDriveB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    //robot.leftDriveF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    //robot.rightDriveB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        // Ensure the robot it stationary, then reset the encoders and calibrate the gyro.
+        //robot.leftDriveF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //robot.rightDriveB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //robot.leftDriveF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //robot.rightDriveB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-    telemetry.addData(">", "Robot Ready.");    //
-    telemetry.update();
+        telemetry.addData(">", "Robot Ready.");    //
+        telemetry.update();
 
-    waitForStart();
-        duckPosition = imageProcessing.FindDuckPosition();
-        Log.d(TAG, "DuckPosition = " + duckPosition);
-        if (duckPosition == ImageProcessing.DuckPosition.LEFT)
-        {
-            telemetry.addLine("The Duck Position is Left");
-            Log.d(TAG, "The Duck Position is Left");
-            driveToTheShippingHub();
-            driveToTheCarrousel();
-            driveToTheWarehouses();
-        }
+        waitForStart();
+           duckPosition = imageProcessing.FindDuckPosition();
+            Log.d(TAG, "DuckPosition = " + duckPosition);
+            if (duckPosition == ImageProcessingRed.DuckPositionRed.LEFT) {
+                telemetry.addLine("The Duck Position is Left");
+                Log.d(TAG, "The Duck Position is Left");
+                driveToTheShippingHub();
+                driveToTheCarrousel();
+                driveToTheWarehouses();
+            }
 
-        if (duckPosition == ImageProcessing.DuckPosition.CENTER)
-        {
-            telemetry.addLine("The Duck Position is Center");
-            Log.d(TAG, "The Duck Position is Center");
-            driveToTheShippingHub();
-            driveToTheCarrousel();
-            driveToTheWarehouses();
-        }
-        if (duckPosition == ImageProcessing.DuckPosition.RIGHT)
-        {
-            telemetry.addLine("The Duck Position is Right");
-            Log.d(TAG, "The Duck Position is Right");
-            driveToTheShippingHub();
-            driveToTheCarrousel();
-            driveToTheWarehouses();
-        }
+            if (duckPosition == ImageProcessingRed.DuckPositionRed.CENTER) {
+                telemetry.addLine("The Duck Position is Center");
+                Log.d(TAG, "The Duck Position is Center");
+                driveToTheShippingHub();
+                driveToTheCarrousel();
+                driveToTheWarehouses();
+            }
+            if (duckPosition == ImageProcessingRed.DuckPositionRed.RIGHT) {
+                telemetry.addLine("The Duck Position is Right");
+                Log.d(TAG, "The Duck Position is Right");
+                driveToTheShippingHub();
+                driveToTheCarrousel();
+                driveToTheWarehouses();
+            }
 
         /*gyroDrive(0.8, 100, 0);
         gyroTurn(0.6,90);
@@ -86,9 +83,9 @@ public class AutonomousConnection_Red extends LinearOpMode {
         gyroTurn(0.6, 270);
         gyroDrive(-0.8, 100, 270);
         gyroTurn(0.6, 0);*/
-        ;
+            ;
 
-        telemetry.update();
+            telemetry.update();
         /*gyroTurn(0.8, 90);
         sleep(1000);
         gyroTurn(0.8, 45);
@@ -96,13 +93,13 @@ public class AutonomousConnection_Red extends LinearOpMode {
         gyroTurn(0.8, 22.5);*/
 
 
-        Log.d(TAG, "rightDriveF Motor position is =" + robot.rightDriveF.getCurrentPosition());
-        Log.d(TAG, "leftDriveF Motor position is =" + robot.leftDriveF.getCurrentPosition());
-        Log.d(TAG, "rightDriveB Motor position is =" + robot.rightDriveB.getCurrentPosition());
-        Log.d(TAG, "leftDriveB Motor position is =" + robot.leftDriveB.getCurrentPosition());
-        //while (opModeIsActive());
+            Log.d(TAG, "rightDriveF Motor position is =" + robot.rightDriveF.getCurrentPosition());
+            Log.d(TAG, "leftDriveF Motor position is =" + robot.leftDriveF.getCurrentPosition());
+            Log.d(TAG, "rightDriveB Motor position is =" + robot.rightDriveB.getCurrentPosition());
+            Log.d(TAG, "leftDriveB Motor position is =" + robot.leftDriveB.getCurrentPosition());
+            //while (opModeIsActive());
 
-    }
+        }
 
     private void driveToTheShippingHub ()
     {
@@ -116,18 +113,19 @@ public class AutonomousConnection_Red extends LinearOpMode {
     }
     private void driveToTheCarrousel ()
     {
-        gyroDrive(0.8, -60, 0);
-        gyroTurn(0.6, 90);
-        gyroDrive(0.8, -170, 90);
-        gyroTurn(0.6, 125);
-        robot.carrouselMotor.setPower(0.8);
-        sleep(2500);
+        gyroDrive(0.8, -50, 0);
+        gyroTurn(0.6, -90);
+        gyroDrive(0.8, 165, -90);
+        gyroTurn(0.6, -80);
+        gyroDrive(0.8, 13, -80);
+        robot.carrouselMotor.setPower(-0.8);
+        sleep(3000);
         robot.carrouselMotor.setPower(0.0);
-        gyroTurn(0.6, 90);
+        gyroTurn(0.6, -90);
     }
 
     private void driveToTheWarehouses () {
-        gyroDrive(0.8, 130, 90);
+        gyroDrive(0.8, -130, -90);
         gyroTurn(0.6, 0);
         gyroDrive(0.8, 25 , 0);
         gyroTurn(0.6, 90);
@@ -146,7 +144,7 @@ public class AutonomousConnection_Red extends LinearOpMode {
         robot.leftDriveB.setPower(1.0);
         robot.rightDriveF.setPower(1.0);
         robot.rightDriveB.setPower(1.0);
-        sleep(1500);
+        sleep(2100);
         robot.leftDriveF.setPower(0.0);
         robot.leftDriveB.setPower(0.0);
         robot.rightDriveF.setPower(0.0);
@@ -155,7 +153,7 @@ public class AutonomousConnection_Red extends LinearOpMode {
     }
 
     public void gyroTurn (  double speed, double angle) {
-
+        angle = -angle;
         // keep looping while we are still active, and not on heading.
         while (opModeIsActive() && !onHeading(speed, angle, P_TURN_COEFF)) {
             // Updates telemetry & Allow time for other processes to run.
@@ -242,7 +240,7 @@ public class AutonomousConnection_Red extends LinearOpMode {
         int rangRightDriveB;
         int direction = 1;
 
-
+        angle = -angle;
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
