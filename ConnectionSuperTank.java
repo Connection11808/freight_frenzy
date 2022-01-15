@@ -31,13 +31,9 @@ package org.firstinspires.ftc.teamcode;
 
 import android.util.Log;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.Range;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 /**
  * This OpMode uses the common Pushbot hardware class to define the devices on the robot.
@@ -53,9 +49,9 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Pushbot: Teleop POV_Connection", group="Pushbot")
+@TeleOp(name="ConnectionSuperTank", group="Pushbot")
 
-public class ConnectionTeleopPOV_Linear extends LinearOpMode {
+public class ConnectionSuperTank extends LinearOpMode {
 
     /* Declare OpMode members. */
     ConnectionHardware robot = new ConnectionHardware();   // Use a Pushbot's hardware
@@ -67,8 +63,7 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
     public void runOpMode() {
         double left;
         double right;
-        double drive;
-        double turn;
+        double side;
         double max;
         boolean armMotorStart = false;
         int armPosition;
@@ -97,12 +92,9 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
             // Run wheels in POV mode (note: The joystick goes negative when pushed forwards, so negate it)
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
             // This way it's also easy to just drive straight, or just turn.
-            drive = -gamepad1.left_stick_y;
-            turn = gamepad1.right_stick_x;
-
-            // Combine drive and turn for blended motion.
-            left = drive + turn;
-            right = drive - turn;
+            right = -gamepad1.right_stick_y;
+            left  = -gamepad1.left_stick_y;
+            side = gamepad1.right_stick_x;
 
             // Normalize the values so neither exceed +/- 1.0
             max = Math.max(Math.abs(left), Math.abs(right));
@@ -111,10 +103,11 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
                 right /= max;
             }
 
-            robot.leftDriveF.setPower(left);
-            robot.leftDriveB.setPower(left);
-            robot.rightDriveF.setPower(right);
-            robot.rightDriveB.setPower(right);
+            robot.leftDriveF.setPower(left -side);
+            robot.leftDriveB.setPower(left + side);
+            robot.rightDriveF.setPower(right + side);
+            robot.rightDriveB.setPower(right - side);
+
 
             // Output the safe vales to the motor drives.
             // Use gamepad left & right Bumpers to open and close the claw
@@ -201,18 +194,6 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
                 robot.carrouselMotor.setPower(0.8);
             } else {
                 robot.carrouselMotor.setPower(0);
-            }
-
-            if (gamepad1.b) {
-                robot.sideDrive(0.8);
-            } else if (gamepad1.a) {
-                robot.sideDrive(-0.8);
-            } else {
-                robot.rightDriveF.setPower(0);
-                robot.leftDriveF.setPower(0);
-                robot.rightDriveB.setPower(0);
-                robot.leftDriveB.setPower(0);
-
             }
 
             // Move both servos to new position.  Assume servos are mirror image of each other.

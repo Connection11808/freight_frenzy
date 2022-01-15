@@ -116,6 +116,7 @@ public class AutonomousConnection_Blue extends LinearOpMode {
         gyroDrive(0.8, -50, 0);
         gyroTurn(0.6, 90);
         gyroDrive(0.8, -180, 90);
+        gyroTurn(0.6, 127);
         robot.carrouselMotor.setPower(0.8);
         sleep(3000);
         robot.carrouselMotor.setPower(0.0);

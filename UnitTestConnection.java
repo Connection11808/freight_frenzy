@@ -33,6 +33,7 @@ import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -133,13 +134,67 @@ public class UnitTestConnection extends LinearOpMode  {
                 robot.leftDriveB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 robot.rightDriveF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 robot.rightDriveB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                robot.armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 Log.d(TAG, "Reset Encoder all Motors");
                 robot.leftDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 robot.leftDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 robot.rightDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 robot.rightDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             }
-      }
+
+            if (gamepad1.dpad_right == true)
+            {
+                robot.armMotor.setPower(0.6);
+                Log.d(TAG, "arm encoder position = " + robot.armMotor.getCurrentPosition());
+            }
+            else if (gamepad1.dpad_left == true)
+            {
+                robot.armMotor.setPower(-0.6);
+                Log.d(TAG, "arm encoder position = " + robot.armMotor.getCurrentPosition());
+            }
+            else
+            {
+                robot.armMotor.setPower(0);
+            }
+
+            if (gamepad2.x)
+            {
+                robot.armMotor.getCurrentPosition();
+                Log.d(TAG, "armMotor position is (start)" + " " + robot.armMotor.getCurrentPosition());
+                //robot.armMotor.setTargetPosition(1000);
+                robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                //robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.armMotor.setPower(-0.5);
+                while (opModeIsActive() && robot.armMotor.getCurrentPosition() < 1150)
+                //while (opModeIsActive() && robot.armMotor.isBusy())
+                {
+                    Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
+                }
+                robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }
+            else if (gamepad2.y)
+            {
+                robot.armMotor.getCurrentPosition();
+                Log.d(TAG, "armMotor position is (start)" + " " + robot.armMotor.getCurrentPosition());
+                //robot.armMotor.setTargetPosition(1000);
+                robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                //robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.armMotor.setPower(0.5);
+                while (opModeIsActive() && robot.armMotor.getCurrentPosition() < 1000)
+                //while (opModeIsActive() && robot.armMotor.isBusy())
+                {
+                    Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
+                }
+                robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }
+
+            else
+            {
+                robot.armMotor.setPower(0);
+            }
+
+        }
     }
 
 

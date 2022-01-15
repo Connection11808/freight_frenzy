@@ -108,6 +108,7 @@ public class ConnectionHardware
         rightDriveF.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         leftDriveB.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDriveB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+        armMotor.setDirection(DcMotor.Direction.FORWARD);
 
         leftDriveF.setPower(0);
         rightDriveF.setPower(0);
@@ -123,6 +124,7 @@ public class ConnectionHardware
         rightDriveF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftDriveB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightDriveB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         leftDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -131,6 +133,8 @@ public class ConnectionHardware
         armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         carrouselMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         collectorMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         //servoDoorF.setPosition(ARM_HOME);
         //servoDoorB.setPosition(ARM_HOME);
 
