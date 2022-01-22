@@ -65,7 +65,7 @@ public class ImageProcessingBlue {
 
     public DuckPositionBlue FindDuckPosition()
     {
-        DuckPositionBlue duckPosition = null;
+        DuckPositionBlue duckPositionBlue = null;
         if (tfod != null) {
             // getUpdatedRecognitions() will return null if no new information is available since
             // the last time that call was made.
@@ -95,19 +95,19 @@ public class ImageProcessingBlue {
                 if (i == 0)
                 {
                     Log.d(TAG, "The Duck in left");
-                    duckPosition = DuckPositionBlue.LEFT;
+                    duckPositionBlue = DuckPositionBlue.LEFT;
                 }
                 else if (i == 1)
                 {
                     if (left < 100)
                     {
                         Log.d(TAG, "The Duck in the center");
-                        duckPosition = DuckPositionBlue.CENTER;
+                        duckPositionBlue = DuckPositionBlue.CENTER;
                     }
                     else if (left > 400)
                     {
                         Log.d(TAG, "The Duck in right");
-                        duckPosition = DuckPositionBlue.RIGHT;
+                        duckPositionBlue = DuckPositionBlue.RIGHT;
                     }
                     else
                     {
@@ -120,7 +120,7 @@ public class ImageProcessingBlue {
                 }
             }
         }
-        return (duckPosition);
+        return (duckPositionBlue);
     }
 
     private void initVuforia(HardwareMap hardwareMap) {

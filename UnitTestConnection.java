@@ -56,11 +56,11 @@ public class UnitTestConnection extends LinearOpMode  {
 
     private String TAG = "UnitTest";
     private ConnectionHardware robot = new ConnectionHardware();
-    private double MotorSpeed = 0.1;
+    private double MotorSpeed = 1.0;
 
     @Override public void runOpMode() {
-        Log.d(TAG, "Wait for Start");
         robot.init(hardwareMap);
+        Log.d(TAG, "Wait for Start");
         while (!isStarted()) {
 
         }
@@ -155,43 +155,78 @@ public class UnitTestConnection extends LinearOpMode  {
             }
             else
             {
-                robot.armMotor.setPower(0);
+                //robot.armMotor.setPower(0);
             }
 
             if (gamepad2.x)
             {
                 robot.armMotor.getCurrentPosition();
-                Log.d(TAG, "armMotor position is (start)" + " " + robot.armMotor.getCurrentPosition());
+                Log.d(TAG, "armMotor position is (start X)" + " " + robot.armMotor.getCurrentPosition());
                 //robot.armMotor.setTargetPosition(1000);
-                robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 //robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                robot.armMotor.setPower(-0.5);
-                while (opModeIsActive() && robot.armMotor.getCurrentPosition() < 1150)
+                robot.armMotor.setPower(0.5);
+                while (opModeIsActive() && robot.armMotor.getCurrentPosition() < 1750)
                 //while (opModeIsActive() && robot.armMotor.isBusy())
                 {
                     Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
                 }
                 robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                robot.armMotor.setPower(-0.1);
+                Log.d(TAG, "armMotor position is (stop) " + " " + robot.armMotor.getCurrentPosition());
+                robot.collectorMotor.setPower(0.5);
+                sleep(2000);
+                robot.collectorMotor.setPower(0);
+
             }
+
             else if (gamepad2.y)
             {
                 robot.armMotor.getCurrentPosition();
-                Log.d(TAG, "armMotor position is (start)" + " " + robot.armMotor.getCurrentPosition());
+                Log.d(TAG, "armMotor position is (start Y)" + " " + robot.armMotor.getCurrentPosition());
                 //robot.armMotor.setTargetPosition(1000);
-                robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 //robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 robot.armMotor.setPower(0.5);
-                while (opModeIsActive() && robot.armMotor.getCurrentPosition() < 1000)
+                while (opModeIsActive() && robot.armMotor.getCurrentPosition() < 1600)
                 //while (opModeIsActive() && robot.armMotor.isBusy())
                 {
                     Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
                 }
                 robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                robot.armMotor.setPower(-0.1);
+                Log.d(TAG, "armMotor position is (stop) " + " " + robot.armMotor.getCurrentPosition());
+                robot.collectorMotor.setPower(0.5);
+                sleep(2000);
+                robot.collectorMotor.setPower(0);
+
+            }
+
+            else if (gamepad2.a)
+            {
+                robot.armMotor.getCurrentPosition();
+                Log.d(TAG, "armMotor position is (start Y)" + " " + robot.armMotor.getCurrentPosition());
+                //robot.armMotor.setTargetPosition(1000);
+                robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                //robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.armMotor.setPower(0.5);
+                while (opModeIsActive() && robot.armMotor.getCurrentPosition() < 1915)
+                //while (opModeIsActive() && robot.armMotor.isBusy())
+                {
+                    Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
+                }
+                robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                robot.armMotor.setPower(-0.1);
+                Log.d(TAG, "armMotor position is (stop) " + " " + robot.armMotor.getCurrentPosition());
+                robot.collectorMotor.setPower(0.5);
+                sleep(2000);
+                robot.collectorMotor.setPower(0);
+
             }
 
             else
             {
-                robot.armMotor.setPower(0);
+                //robot.armMotor.setPower(0.0);
             }
 
         }

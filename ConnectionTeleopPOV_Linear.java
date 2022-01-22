@@ -107,15 +107,17 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
             // Normalize the values so neither exceed +/- 1.0
             max = Math.max(Math.abs(left), Math.abs(right));
             if (max > 1.0) {
-                left /= max;
                 right /= max;
+                left /= max;
             }
 
             robot.leftDriveF.setPower(left);
             robot.leftDriveB.setPower(left);
             robot.rightDriveF.setPower(right);
             robot.rightDriveB.setPower(right);
-
+            Log.d(TAG, "Left" + " " + left);
+            Log.d(TAG, "Right" + " " + right);
+            Log.d(TAG, "turn" + " " + turn);
             // Output the safe vales to the motor drives.
             // Use gamepad left & right Bumpers to open and close the claw
             /*if (gamepad1.right_bumper)
@@ -131,22 +133,22 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
 
 
             if (gamepad2.right_trigger == 1.0) {
-                robot.collectorMotor.setPower(1.0);
+                robot.collectorMotor.setPower(0.7);
             } else if (gamepad2.left_trigger == 1.0) {
-                robot.collectorMotor.setPower(-1.0);
+                robot.collectorMotor.setPower(-0.7);
             } else {
                 robot.collectorMotor.setPower(0.0);
             }
 
             if (gamepad2.right_bumper) {
                 //robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.armMotor.setPower(0.5);
+                robot.armMotor.setPower(0.8);
                 armMotorStart = true;
                 robot.armMotor.getCurrentPosition();
                 Log.d(TAG, "arm position is (right) " + " " + robot.armMotor.getCurrentPosition());
             } else if (gamepad2.left_bumper) {
                 //robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.armMotor.setPower(-0.3);
+                robot.armMotor.setPower(-0.8);
                 armMotorStart = true;
                 robot.armMotor.getCurrentPosition();
                 Log.d(TAG, "arm position is (left) " + " " + robot.armMotor.getCurrentPosition());
@@ -191,7 +193,7 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
                     }
 
                      */
-                robot.armMotor.setPower(0.1);
+                robot.armMotor.setPower(-0.1);
                 robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
 
@@ -203,9 +205,9 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
                 robot.carrouselMotor.setPower(0);
             }
 
-            if (gamepad1.b) {
+            if (gamepad1.right_bumper) {
                 robot.sideDrive(0.8);
-            } else if (gamepad1.a) {
+            } else if (gamepad1.left_bumper) {
                 robot.sideDrive(-0.8);
             } else {
                 robot.rightDriveF.setPower(0);
