@@ -111,19 +111,20 @@ public class AutonomousConnection_Red extends LinearOpMode {
 
     private void driveToTheShippingHub ()
     {
-        gyroDrive(0.8, 20, 0);
+        robot.collectorMotor.setPower(-0.2);
+        gyroDrive(0.8, 12, 0);
         gyroTurn(0.6,-90);
-        gyroDrive(0.8, 50, -90);
+        gyroDrive(0.8, 51, -90);
         gyroTurn(0.6,0);
-        gyroDrive(0.8, 23,0);
+        gyroTurn(0.6,0);
+        gyroDrive(0.8, 10,0);
 
     }
     private void driveToTheCarrousel ()
     {
-        gyroDrive(0.8, -45, 0);
+        gyroDrive(0.8, -23, 0);
         gyroTurn(0.6, -90);
         gyroDrive(0.8, 165, -90);
-        gyroTurn(0.6, -80);
         robot.carrouselMotor.setPower(-0.8);
         sleep(3000);
         robot.carrouselMotor.setPower(0.0);
@@ -171,9 +172,8 @@ public class AutonomousConnection_Red extends LinearOpMode {
         }
         else
         {
-            armTargetPosition = 1600;
+            armTargetPosition = 1620;
         }
-
         robot.armMotor.getCurrentPosition();
         Log.d(TAG, "armMotor position is (start)" + " " + robot.armMotor.getCurrentPosition());
         robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -185,14 +185,37 @@ public class AutonomousConnection_Red extends LinearOpMode {
         robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.armMotor.setPower(-0.1);
         Log.d(TAG, "armMotor position is (stop) " + " " + robot.armMotor.getCurrentPosition());
-        robot.collectorMotor.setPower(0.5);
-        sleep(2000);
-        robot.collectorMotor.setPower(0);
+        //robot.collectorMotor.setPower(0.37);
+        //sleep(3500);
+        //robot.collectorMotor.setPower(0);
+        releaseTheCube();
         robot.armMotor.setPower(-0.5);
         sleep(2000);
         robot.armMotor.setPower(0);
     }
 
+    private void releaseTheCube () {
+        robot.collectorMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.collectorMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.collectorMotor.setTargetPosition(200);
+        robot.collectorMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        runtime.reset();
+        robot.collectorMotor.setPower(0.4);
+        while (opModeIsActive() &&
+                (runtime.seconds() < 3) &&
+                (robot.collectorMotor.isBusy())) {
+            Log.d(TAG, "collectorMotor is " + " " + robot.collectorMotor.getCurrentPosition());
+        }
+        if (robot.collectorMotor.isBusy())
+        {
+            Log.d(TAG, "timeout 3 seconds");
+        }
+        else
+        {
+            Log.d(TAG, "collectorMotor in the target position");
+        }
+        robot.collectorMotor.setPower(0);
+    }
     public void gyroTurn (  double speed, double angle) {
         angle = -angle;
         // keep looping while we are still active, and not on heading.

@@ -228,9 +228,20 @@ public class UnitTestConnection extends LinearOpMode  {
             {
                 //robot.armMotor.setPower(0.0);
             }
-
+            if (gamepad2.right_trigger == 1.0) {
+                robot.collectorMotor.setPower(0.6);
+                Log.d(TAG, "collectorMotor position is" + " " + robot.collectorMotor.getCurrentPosition());
+            }
+            else if (gamepad2.left_trigger == 1.0) {
+                robot.collectorMotor.setPower(-0.6);
+                Log.d(TAG, "collectorMotor position is" + " " + robot.collectorMotor.getCurrentPosition());
+            }
+            else
+            {
+                robot.collectorMotor.setPower(0);
+           }
         }
+
     }
-
-
 }
+
