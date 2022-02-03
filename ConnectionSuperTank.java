@@ -116,11 +116,11 @@ public class ConnectionSuperTank extends LinearOpMode {
             else if (gamepad1.left_bumper)
                 clawOffset -= CLAW_SPEED;*/
 
-            if (gamepad2.a) {
+            /*if (gamepad2.a) {
                 robot.plierServo.setPosition(1);
             } else if (gamepad2.b) {
                 robot.plierServo.setPosition(-1);
-            }
+            }*/
 
 
             if (gamepad2.right_trigger == 1.0) {

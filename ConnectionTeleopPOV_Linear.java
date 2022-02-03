@@ -99,26 +99,57 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
             // This way it's also easy to just drive straight, or just turn.
             drive = -gamepad1.left_stick_y;
-            turn = gamepad1.right_stick_x;
+            turn  =  gamepad1.right_stick_x;
 
             // Combine drive and turn for blended motion.
-            left = drive + turn;
+            left  = drive + turn;
             right = drive - turn;
 
             // Normalize the values so neither exceed +/- 1.0
             max = Math.max(Math.abs(left), Math.abs(right));
-            if (max > 1.0) {
-                right /= max;
+            if (max > 1.0)
+            {
                 left /= max;
+                right /= max;
             }
 
+            // Output the safe vales to the motor drives.
             robot.leftDriveF.setPower(left);
-            robot.leftDriveB.setPower(left);
             robot.rightDriveF.setPower(right);
+            robot.leftDriveB.setPower(left);
             robot.rightDriveB.setPower(right);
-            Log.d(TAG, "Left" + " " + left);
-            Log.d(TAG, "Right" + " " + right);
-            Log.d(TAG, "turn" + " " + turn);
+
+            // Run wheels in POV mode (note: The joystick goes negative when pushed forwards, so negate it)
+            // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
+            // This way it's also easy to just drive straight, or just turn.
+            /*double driveY = -gamepad1.left_stick_y;
+            double driveX = -gamepad1.left_stick_x;
+            turn = gamepad1.right_stick_x;
+
+            // Combine drive and turn for blended motion.
+            double leftFSpeed = driveX + driveY + turn;
+            double leftBSpeed = -driveX + driveY + turn;
+            double rightFSpeed = -driveX + driveY - turn;
+            double rightBSpeed = driveX + driveY - turn;
+
+            double max = Math.max(1.0, leftFSpeed);
+            max = Math.max(max, leftBSpeed);
+            max = Math.max(max, rightFSpeed);
+            max = Math.max(max, rightBSpeed);
+
+            leftFSpeed /= max;
+            leftBSpeed /= max;
+            rightFSpeed /= max;
+            rightBSpeed /= max;
+
+            robot.leftDriveF.setPower(leftFSpeed);
+            robot.leftDriveB.setPower(leftBSpeed);
+            robot.rightDriveF.setPower(rightFSpeed);
+            robot.rightDriveB.setPower(rightBSpeed);
+            Log.d(TAG, "leftFSpeed" + " " + leftFSpeed);
+            Log.d(TAG, "leftBSpeed" + " " + leftBSpeed);
+            Log.d(TAG, "rightFSpeed" + " " + rightFSpeed);
+            Log.d(TAG, "rightBSpeed" + " " + rightBSpeed);*/
             // Output the safe vales to the motor drives.
             // Use gamepad left & right Bumpers to open and close the claw
             /*if (gamepad1.right_bumper)
@@ -126,12 +157,23 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
             else if (gamepad1.left_bumper)
                 clawOffset -= CLAW_SPEED;*/
 
-            if (gamepad2.a) {
-                robot.plierServo.setPosition(1);
-            } else if (gamepad2.b) {
-                robot.plierServo.setPosition(-1);
+            if (gamepad2.y) {
+                robot.putElementServo.setPosition(1);
+            } else if (gamepad2.a) {
+                robot.putElementServo.setPosition(-1);
             }
 
+            if (gamepad2.dpad_up) {
+                robot.hiteElementServo.setPosition(1);
+            } else if (gamepad2.dpad_down) {
+                robot.hiteElementServo.setPosition(-1);
+            }
+
+            if (gamepad2.dpad_right) {
+                robot.angleElementServo.setPosition(1);
+            } else if (gamepad2.dpad_left) {
+                robot.angleElementServo.setPosition(-1);
+            }
 
             if (gamepad2.right_trigger == 1.0) {
                 robot.collectorMotor.setPower(0.6);
@@ -196,9 +238,9 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
                         robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                     }
 
-                    if (gamepad2.x) {
+                    if (gamepad1.x) {
                         robot.carrouselMotor.setPower(-0.8);
-                    } else if (gamepad2.y) {
+                    } else if (gamepad1.y) {
                         robot.carrouselMotor.setPower(0.8);
                     } else {
                         robot.carrouselMotor.setPower(0);

@@ -102,12 +102,12 @@ public class PushbotTeleopTank_Iterative_Connection extends OpMode{
         double left_x = -gamepad1.left_stick_x;
         double right_x = -gamepad1.right_stick_x;
 
-        if (gamepad2.a) {
+        /*if (gamepad2.a) {
             robot.plierServo.setPosition(1);
         }
         else if (gamepad2.b) {
             robot.plierServo.setPosition(-1);
-        }
+        }*/
 
 
         if (gamepad2.left_trigger > 0.5 && gamepad2.left_trigger <= 1.0) {

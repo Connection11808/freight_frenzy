@@ -69,7 +69,9 @@ public class ConnectionHardware
     public DcMotor  armMotor = null;
     public DcMotor  carrouselMotor = null;
     public DcMotor  collectorMotor = null;
-    public Servo plierServo = null;
+    public Servo angleElementServo = null;
+    public Servo hiteElementServo = null;
+    public Servo putElementServo = null;
     // The IMU sensor object
     private BNO055IMU imu;
 
@@ -102,7 +104,9 @@ public class ConnectionHardware
         armMotor = hwMap.get(DcMotor.class, "AM");
         carrouselMotor = hwMap.get(DcMotor.class, "CM");
         collectorMotor = hwMap.get(DcMotor.class, "CLM");
-        plierServo = hwMap.get(Servo.class, "PS");
+        angleElementServo = hwMap.get(Servo.class, "AES");
+        hiteElementServo = hwMap.get(Servo.class, "HES");
+        putElementServo = hwMap.get(Servo.class, "PES");
 
         leftDriveF.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDriveF.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
@@ -117,7 +121,9 @@ public class ConnectionHardware
         armMotor.setPower(0);
         carrouselMotor.setPower(0);
         collectorMotor.setPower(0);
-        plierServo.setPosition(0);
+        angleElementServo.setPosition(0);
+        hiteElementServo.setPosition(0);
+        putElementServo.setPosition(0);
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftDriveF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -150,10 +156,10 @@ public class ConnectionHardware
 
         }
     public void sideDrive(double speed){
-        rightDriveF.setPower(-speed);
-        rightDriveB.setPower(speed);
-        leftDriveF.setPower(speed);
-        leftDriveB.setPower(-speed);
+        rightDriveF.setPower(speed);
+        rightDriveB.setPower(-speed);
+        leftDriveF.setPower(-speed);
+        leftDriveB.setPower(speed);
     }
 
     private boolean initImu(){
