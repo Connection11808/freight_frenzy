@@ -10,14 +10,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@Autonomous(name="ConnectionAutonomous_Red", group="Pushbot")
-public class ConnectionAutonomous_Red extends LinearOpMode {
+@Autonomous(name="ConnectionAutonomous_Blue", group="Pushbot")
+public class ConnectionAutonomous_Blue extends LinearOpMode {
 
-    ImageProcessingRed imageProcessing = new ImageProcessingRed();
+    ImageProcessingBlue imageProcessing = new ImageProcessingBlue();
     PushbotAutoDriveByEncoder_Linear_Connection pushbotAutoDriveByEncoderLinearConnection = new PushbotAutoDriveByEncoder_Linear_Connection();
     ConnectionHardware robot       = new ConnectionHardware();
     private ElapsedTime     runtime = new ElapsedTime();
-    ImageProcessingRed.DuckPositionRed duckPosition;
+    ImageProcessingBlue.DuckPositionBlue duckPosition;
     private String TAG = "AutonomousConnection";
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5;
@@ -53,13 +53,12 @@ public class ConnectionAutonomous_Red extends LinearOpMode {
 
         telemetry.addData(">", "Robot start");
         telemetry.update();
-        duckPosition = ImageProcessingRed.DuckPositionRed.CENTER;
         duckPosition = imageProcessing.FindDuckPosition();
         //duckPosition = ImageProcessingRed.DuckPositionRed.LEFT;
         telemetry.addData(">", "Robot start 1");
         telemetry.update();
         Log.d(TAG, "DuckPosition = " + duckPosition);
-        if (duckPosition == ImageProcessingRed.DuckPositionRed.LEFT) {
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.LEFT) {
             telemetry.addLine("The Duck Position is Left");
             Log.d(TAG, "The Duck Position is Left");
             driveToTheShippingHub(ImageProcessingRed.DuckPositionRed.LEFT);
@@ -68,7 +67,7 @@ public class ConnectionAutonomous_Red extends LinearOpMode {
             driveToTheWarehouses();
         }
 
-        if (duckPosition == ImageProcessingRed.DuckPositionRed.CENTER) {
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.CENTER) {
             telemetry.addLine("The Duck Position is Center");
             Log.d(TAG, "The Duck Position is Center");
             driveToTheShippingHub(ImageProcessingRed.DuckPositionRed.CENTER);
@@ -76,7 +75,7 @@ public class ConnectionAutonomous_Red extends LinearOpMode {
             driveToTheCarrousel();
             driveToTheWarehouses();
         }
-        if (duckPosition == ImageProcessingRed.DuckPositionRed.RIGHT) {
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.RIGHT) {
             telemetry.addLine("The Duck Position is Right");
             Log.d(TAG, "The Duck Position is Right");
             driveToTheShippingHub(ImageProcessingRed.DuckPositionRed.RIGHT);
@@ -115,8 +114,8 @@ public class ConnectionAutonomous_Red extends LinearOpMode {
     {
         robot.collectorMotor.setPower(-0.2);
         gyroDrive(1.0, 20, 0);
-        gyroTurn(0.6,-90);
-        gyroDrive(1.0, 73, -90);
+        gyroTurn(0.6,90);
+        gyroDrive(1.0, 73, 90);
         gyroTurn(0.6,0);
         gyroTurn(0.6,0);
         if (duckPositionRed == ImageProcessingRed.DuckPositionRed.RIGHT)
@@ -125,35 +124,36 @@ public class ConnectionAutonomous_Red extends LinearOpMode {
         }
         else if (duckPositionRed == ImageProcessingRed.DuckPositionRed.CENTER)
         {
-            gyroDrive(1.0, 7, 0);
+            gyroDrive(1.0, -5, 0);
         }
         else
         {
-            gyroDrive(1.0, 8, 0);
+            gyroDrive(1.0, -7, 0);
         }
 
     }
     private void driveToTheCarrousel ()
     {
-        gyroDrive(1.0, 30, 0);
+        gyroDrive(1.0, 39, 0);
         gyroTurn(0.6, -90);
-        gyroDrive(1.0, 200, -90);
+        gyroDrive(1.0, -200, -90);
         robot.sideDrive(1.0);
-        sleep(1000);
+        sleep(1300);
         robot.sideDrive(0.0);
-        gyroTurn(0.6, -90);
+        gyroTurn(0.6, -110);
         //gyroTurn(0.6, -90);
-        gyroDrive(1.0, 87,-90);
-        robot.carrouselMotor.setPower(-0.6);
+        //gyroDrive(1.0, -87,-90);
+        robot.carrouselMotor.setPower(0.6);
         sleep(3500);
         robot.carrouselMotor.setPower(0.0);
+        gyroTurn(0.6, -90);
         robot.sideDrive(-1.0);
         sleep(920);
         robot.sideDrive(0.0);
     }
 
     private void driveToTheWarehouses () {
-        gyroDrive(1.0, -215, -90);
+        gyroDrive(1.0, 215, -90);
         //gyroTurn(0.6, 0);
         //gyroDrive(0.8, 30 , 0);
         //gyroTurn(0.6, 90);
@@ -168,10 +168,10 @@ public class ConnectionAutonomous_Red extends LinearOpMode {
         robot.rightDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.leftDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.rightDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.leftDriveF.setPower(-1.0);
-        robot.leftDriveB.setPower(-1.0);
-        robot.rightDriveF.setPower(-1.0);
-        robot.rightDriveB.setPower(-1.0);
+        robot.leftDriveF.setPower(1.0);
+        robot.leftDriveB.setPower(1.0);
+        robot.rightDriveF.setPower(1.0);
+        robot.rightDriveB.setPower(1.0);
         sleep(2400);
         robot.leftDriveF.setPower(0.0);
         robot.leftDriveB.setPower(0.0);
@@ -206,9 +206,13 @@ public class ConnectionAutonomous_Red extends LinearOpMode {
         robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.armMotor.setPower(-0.1);
         Log.d(TAG, "armMotor position is (stop) " + " " + robot.armMotor.getCurrentPosition());
-        if (duckPositionRed == ImageProcessingRed.DuckPositionRed.LEFT) {
-            gyroDrive(1.0, 7, 0);
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.LEFT) {
+            gyroDrive(1.0, 12, 0);
         }
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.CENTER) {
+            gyroDrive(1.0, 4, 0);
+        }
+
         //robot.collectorMotor.setPower(0.37);
         //sleep(3500);
         //robot.collectorMotor.setPower(0);

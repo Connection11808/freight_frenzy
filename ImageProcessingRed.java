@@ -60,7 +60,7 @@ public class ImageProcessingRed {
 
     public DuckPositionRed FindDuckPosition()
     {
-        DuckPositionRed duckPosition = null;
+        DuckPositionRed duckPosition = DuckPositionRed.RIGHT;
         if (tfod != null) {
             // getUpdatedRecognitions() will return null if no new information is available since
             // the last time that call was made.
@@ -100,7 +100,7 @@ public class ImageProcessingRed {
                 }
                 else if (i == 1)
                 {
-                    if (left > 400)
+                    if (left > 350)
                     {
                         Log.d(TAG, "The Duck in the center");
                         duckPosition = DuckPositionRed.CENTER;
