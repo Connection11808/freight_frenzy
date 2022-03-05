@@ -319,6 +319,10 @@ public class PushbotAutoDriveByGyro_Linear_Connection extends LinearOpMode {
         else {
             steer = getSteer(error, PCoeff);
             rightSpeed  = speed * steer;
+            if (Math.abs(rightSpeed) < 0.15)
+            {
+                rightSpeed = 0.15;
+            }
             leftSpeed   = -rightSpeed;
         }
 

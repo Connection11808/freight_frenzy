@@ -29,6 +29,8 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import android.util.Log;
+
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -63,6 +65,8 @@ public class PushbotTeleopTank_Iterative_Connection extends OpMode{
     final double    CLAW_SPEED  = 0.02 ;                 // sets rate to move servo
     double      armPosition  = robot.ARM_HOME;
     final double ARM_SPEED = 0.01;
+    boolean armMotorStart = false;
+    public String TAG = "teleopTank";
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -97,10 +101,10 @@ public class PushbotTeleopTank_Iterative_Connection extends OpMode{
     @Override
     public void loop() {
         // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
-        double left_y = gamepad1.left_stick_y;
-        double right_y = gamepad1.right_stick_y;
-        double left_x = -gamepad1.left_stick_x;
-        double right_x = -gamepad1.right_stick_x;
+        double left_y = -gamepad1.left_stick_y;
+        double right_y = -gamepad1.right_stick_y;
+        double left_x = gamepad1.left_stick_x;
+        double right_x = gamepad1.right_stick_x;
 
         /*if (gamepad2.a) {
             robot.plierServo.setPosition(1);
@@ -109,82 +113,114 @@ public class PushbotTeleopTank_Iterative_Connection extends OpMode{
             robot.plierServo.setPosition(-1);
         }*/
 
+        if (gamepad2.x) {
+            robot.droppingACube.setPosition(0.5);
+        } else if (gamepad2.y) {
+            robot.droppingACube.setPosition(-1);
+        }
 
-        if (gamepad2.left_trigger > 0.5 && gamepad2.left_trigger <= 1.0) {
-            robot.collectorMotor.setPower(0.8);
+
+        if (gamepad2.right_trigger == 1.0) {
+            robot.collectorMotor.setPower(0.6);
+        } else if (gamepad2.left_trigger == 1.0) {
+            robot.collectorMotor.setPower(-1.0);
+        } else {
+            robot.collectorMotor.setPower(0.0);
+            robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        }
+
+        if (gamepad2.left_bumper) {
+            //robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.armMotor.setPower(0.55);
+            armMotorStart = true;
+            robot.armMotor.getCurrentPosition();
+            Log.d(TAG, "arm position is (left) " + " " + robot.armMotor.getCurrentPosition());
+        }
+        else if (gamepad2.right_bumper) {
+            //robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.armMotor.setPower(-0.7);
+            armMotorStart = true;
+            robot.armMotor.getCurrentPosition();
+            Log.d(TAG, "arm position is (right) " + " " + robot.armMotor.getCurrentPosition());
         }
         else {
-            robot.collectorMotor.setPower(0.0);
+
+            /*]
+
+             */
+
+                /*if (armMotorStart == true) {
+                    if (armMotor_run_to_position == false) {
+                        armPosition = robot.armMotor.getCurrentPosition();
+                        if (armPosition < 0) {
+                            armPosition -= 100;
+                        } else {
+                            armPosition += 100;
+                        }
+                        Log.d(TAG, "Set arm Position to = " + " " + armPosition);
+                        robot.armMotor.setTargetPosition(armPosition);
+                        robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                        armMotor_run_to_position = true;
+                    } else {
+                    /*
+                }
+                    if (robot.armMotor.isBusy() == false)
+                    {
+                    }
+                        Log.d(TAG, "armMotor not Busy"); */
+            // armMotor_run_to_position = false;
+            //robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            //armMotorStart = false;
+            //robot.armMotor.setPower(0);
+            //}
+            //else {
+            //sleep(100);
+            //robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            //Log.d(TAG, "armMotor is Busy");
+            //Log.d(TAG, "arm position is " + " " + robot.armMotor.getCurrentPosition());
+            //  armMotorStart = false;
+            //}
+
+            robot.armMotor.setPower(-0.1);
+            robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
 
-        if (gamepad2.right_bumper) {
-            robot.armMotor.setPower(0.6);
-        }
-
-        else
-        {
-            robot.armMotor.setPower(0.0);
-        }
-
-        if (gamepad2.left_bumper)
-        {
-            robot.armMotor.setPower(-0.6);
-        }
-        else
-        {
-            robot.armMotor.setPower(0.0);
-        }
-
-
-        if (gamepad2.right_trigger <= 0.7 && gamepad2.right_trigger > 0.0)
-        {
+        if (gamepad1.x) {
             robot.carrouselMotor.setPower(-0.8);
-        }
-        else if (gamepad2.right_trigger == 1.0)
-        {
+        } else if (gamepad1.y) {
             robot.carrouselMotor.setPower(0.8);
-        }
-        else
-        {
+        } else {
             robot.carrouselMotor.setPower(0);
         }
 
-        if (gamepad1.b)
-        {
+        if (gamepad1.right_bumper) {
             robot.sideDrive(0.8);
-        }
-        else if (gamepad1.a)
-        {
+        } else if (gamepad1.left_bumper) {
             robot.sideDrive(-0.8);
-        }
-        else
-        {
-            
-
-            robot.leftDriveF.setPower(left_y);
-            robot.rightDriveF.setPower(right_y);
-            robot.leftDriveB.setPower(left_y);
-            robot.rightDriveB.setPower(right_y);
+        } else {
+            robot.rightDriveF.setPower(0);
+            robot.leftDriveF.setPower(0);
+            robot.rightDriveB.setPower(0);
+            robot.leftDriveB.setPower(0);
 
         }
 
-            robot.leftDriveF.setPower(left_y);
-            robot.rightDriveF.setPower(right_y);
-            robot.leftDriveB.setPower(left_y);
-            robot.rightDriveB.setPower(right_y);
+        robot.leftDriveF.setPower(left_y);
+        robot.rightDriveF.setPower(right_y);
+        robot.leftDriveB.setPower(left_y);
+        robot.rightDriveB.setPower(right_y);
 
-        }
-        // Use gamepad left & right Bumpers to open and close the claw
+    }
+    // Use gamepad left & right Bumpers to open and close the claw
         /*if (gamepad1.right_bumper)
             clawOffset += CLAW_SPEED;
         else if (gamepad1.left_bumper)
             0.clawOffset -= CLAW_SPEED;*/
 
-        // Move both servos to new position.  Assume servos are mirror image of each other.
-        //clawOffset = Range.clip(clawOffset, -0.5, 0.5);
+    // Move both servos to new position.  Assume servos are mirror image of each other.
+    //clawOffset = Range.clip(clawOffset, -0.5, 0.5);
         /*robot.leftClaw.setPosition(robot.MID_SERVO + clawOffset);
         robot.rightClaw.setPosition(robot.MID_SERVO - clawOffset);
-
         // Use gamepad buttons to move the arm up (Y) and down (A)
         if (gamepad1.y)
             robot.leftArm.setPower(robot.ARM_UP_POWER);
@@ -193,7 +229,7 @@ public class PushbotTeleopTank_Iterative_Connection extends OpMode{
         else
             robot.leftArm.setPower(0.0);*/
 
-        // Send telemetry message to signify robot running;
+    // Send telemetry message to signify robot running;
 
 
 

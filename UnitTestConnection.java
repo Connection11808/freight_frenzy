@@ -143,6 +143,21 @@ public class UnitTestConnection extends LinearOpMode  {
                 robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             }
 
+            if (gamepad2.dpad_right == true)
+            {
+                robot.turnArmMotor.setPower(0.5);
+                Log.d(TAG, "turnArmMotor encoder position = " + robot.turnArmMotor.getCurrentPosition());
+            }
+            else if (gamepad2.dpad_left == true)
+            {
+                robot.turnArmMotor.setPower(-0.5);
+                Log.d(TAG, "turnArmMotor encoder position = " + robot.turnArmMotor.getCurrentPosition());
+            }
+            else
+            {
+                robot.turnArmMotor.setPower(0);
+            }
+
             if (gamepad1.dpad_right == true)
             {
                 robot.armMotor.setPower(0.6);
@@ -155,7 +170,7 @@ public class UnitTestConnection extends LinearOpMode  {
             }
             else
             {
-                //robot.armMotor.setPower(0);
+                robot.armMotor.setPower(0);
             }
 
             if (gamepad2.x)

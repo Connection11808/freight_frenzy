@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.PushbotAutoDriveByGyro_Linear_Connection.HEADING_THRESHOLD;
+//import static org.firstinspires.ftc.teamcode.PushbotAutoDriveByGyro_Linear_Connection.HEADING_THRESHOLD;
 
 import android.util.Log;
 
@@ -29,6 +29,7 @@ public class ConnectionAutonomous_Blue extends LinearOpMode {
     static final double     P_TURN_COEFF            = 0.1;     // Larger is more responsive, but also less stable
     static final double     P_DRIVE_COEFF           = 0.1; //0.15;     // Larger is more responsive, but also less stable
     static final double     MINIMUM_SPEED           = 0.1;
+    static final double     HEADING_THRESHOLD       = 1 ;
 
     @Override
     public void runOpMode() {
@@ -115,12 +116,12 @@ public class ConnectionAutonomous_Blue extends LinearOpMode {
         robot.collectorMotor.setPower(-0.2);
         gyroDrive(1.0, 20, 0);
         gyroTurn(0.6,90);
-        gyroDrive(1.0, 73, 90);
+        gyroDrive(1.0, 68, 90);
         gyroTurn(0.6,0);
         gyroTurn(0.6,0);
         if (duckPositionRed == ImageProcessingRed.DuckPositionRed.RIGHT)
         {
-            gyroDrive(1.0, 12, 0);
+            gyroDrive(1.0, 19, 0);
         }
         else if (duckPositionRed == ImageProcessingRed.DuckPositionRed.CENTER)
         {
@@ -134,9 +135,9 @@ public class ConnectionAutonomous_Blue extends LinearOpMode {
     }
     private void driveToTheCarrousel ()
     {
-        gyroDrive(1.0, 39, 0);
+        gyroDrive(1.0, 36, 0);
         gyroTurn(0.6, -90);
-        gyroDrive(1.0, -200, -90);
+        gyroDrive(1.0, -120, -90);
         robot.sideDrive(1.0);
         sleep(1300);
         robot.sideDrive(0.0);
@@ -193,7 +194,7 @@ public class ConnectionAutonomous_Blue extends LinearOpMode {
         }
         else
         {
-            armTargetPosition = 1578;
+            armTargetPosition = 1565;
         }
         robot.armMotor.getCurrentPosition();
         Log.d(TAG, "armMotor position is (start)" + " " + robot.armMotor.getCurrentPosition());

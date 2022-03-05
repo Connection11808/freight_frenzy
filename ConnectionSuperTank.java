@@ -122,69 +122,68 @@ public class ConnectionSuperTank extends LinearOpMode {
                 robot.plierServo.setPosition(-1);
             }*/
 
-
             if (gamepad2.right_trigger == 1.0) {
-                robot.collectorMotor.setPower(1.0);
+                robot.collectorMotor.setPower(0.25);
             } else if (gamepad2.left_trigger == 1.0) {
                 robot.collectorMotor.setPower(-1.0);
             } else {
                 robot.collectorMotor.setPower(0.0);
+                robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
 
-            if (gamepad2.right_bumper) {
+            if (gamepad2.left_bumper) {
                 //robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.armMotor.setPower(0.5);
-                armMotorStart = true;
-                robot.armMotor.getCurrentPosition();
-                Log.d(TAG, "arm position is (right) " + " " + robot.armMotor.getCurrentPosition());
-            } else if (gamepad2.left_bumper) {
-                //robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.armMotor.setPower(-0.3);
+                robot.armMotor.setPower(0.55);
                 armMotorStart = true;
                 robot.armMotor.getCurrentPosition();
                 Log.d(TAG, "arm position is (left) " + " " + robot.armMotor.getCurrentPosition());
             }
-            else
-            {
-                /*
-            if (armMotorStart == true) {
-                if (armMotor_run_to_position == false) {
-                    armPosition = robot.armMotor.getCurrentPosition();
-                    if (armPosition < 0)
-                    {
-                        armPosition -= 100;
-                    }
-                    else
-                    {
-                        armPosition += 100;
-                    }
-                    Log.d(TAG, "Set arm Position to = " + " " + armPosition);
-                    robot.armMotor.setTargetPosition(armPosition);
-                    robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    armMotor_run_to_position = true;
-                }
-                else {
+            else if (gamepad2.right_bumper) {
+                //robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                robot.armMotor.setPower(-0.7);
+                armMotorStart = true;
+                robot.armMotor.getCurrentPosition();
+                Log.d(TAG, "arm position is (right) " + " " + robot.armMotor.getCurrentPosition());
+            }
+            else {
+
+                /*]
+
+                 */
+
+                /*if (armMotorStart == true) {
+                    if (armMotor_run_to_position == false) {
+                        armPosition = robot.armMotor.getCurrentPosition();
+                        if (armPosition < 0) {
+                            armPosition -= 100;
+                        } else {
+                            armPosition += 100;
+                        }
+                        Log.d(TAG, "Set arm Position to = " + " " + armPosition);
+                        robot.armMotor.setTargetPosition(armPosition);
+                        robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                        armMotor_run_to_position = true;
+                    } else {
                     /*
                 }
                     if (robot.armMotor.isBusy() == false)
                     {
                     }
-                        Log.d(TAG, "armMotor not Busy");
-                       // armMotor_run_to_position = false;
-                        //robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                        //armMotorStart = false;
-                        //robot.armMotor.setPower(0);
-                    //}
-                    //else {
-                        sleep(100);
-                        robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                        Log.d(TAG, "armMotor is Busy");
-                        Log.d(TAG, "arm position is " + " " + robot.armMotor.getCurrentPosition());
-                        armMotorStart = false;
-                    }
+                        Log.d(TAG, "armMotor not Busy"); */
+                // armMotor_run_to_position = false;
+                //robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                //armMotorStart = false;
+                //robot.armMotor.setPower(0);
+                //}
+                //else {
+                //sleep(100);
+                //robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                //Log.d(TAG, "armMotor is Busy");
+                //Log.d(TAG, "arm position is " + " " + robot.armMotor.getCurrentPosition());
+                //  armMotorStart = false;
+                //}
 
-                     */
-                robot.armMotor.setPower(0.1);
+                robot.armMotor.setPower(-0.1);
                 robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
 
@@ -196,23 +195,17 @@ public class ConnectionSuperTank extends LinearOpMode {
                 robot.carrouselMotor.setPower(0);
             }
 
-            // Move both servos to new position.  Assume servos are mirror image of each other.
-            //clawOffset = Range.clip(clawOffset, -0.5, 0.5);
+            if (gamepad1.right_bumper) {
+                robot.sideDrive(0.8);
+            } else if (gamepad1.left_bumper) {
+                robot.sideDrive(-0.8);
+            } else {
+                robot.rightDriveF.setPower(0);
+                robot.leftDriveF.setPower(0);
+                robot.rightDriveB.setPower(0);
+                robot.leftDriveB.setPower(0);
 
-            // Use gamepad buttons to move arm up (Y) and down (A)
-
-
-            // Send telemetry message to signify robot running;
-            /*telemetry.addData("claw",  "Offset = %.2f", clawOffset);
-            telemetry.addData("left",  "%.2f", left);
-            telemetry.addData("right", "%.2f", right);
-            telemetry.update();*/
-
-
-            //Log.d("teleop", "claw" + "Offset = %.2f" + clawOffset);
-            //Log.d("teleop", "left" + "%.2f" + left);
-            //Log.d("teleop", "right" + "%.2f" + right);
-            // Pace this loop so jaw action is reasonable
+            }
         }
     }
 }

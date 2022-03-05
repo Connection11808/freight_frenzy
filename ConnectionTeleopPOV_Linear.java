@@ -95,85 +95,79 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
-            // Run wheels in POV mode (note: The joystick goes negative when pushed forwards, so negate it)
-            // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
-            // This way it's also easy to just drive straight, or just turn.
-            drive = -gamepad1.left_stick_y;
-            turn  =  gamepad1.right_stick_x;
+            if (gamepad1.right_bumper) {
+                robot.sideDrive(-1.0);
+            } else if (gamepad1.left_bumper) {
+                robot.sideDrive(1.0);
+            } else {
 
-            // Combine drive and turn for blended motion.
-            left  = drive + turn;
-            right = drive - turn;
+                // Run wheels in POV mode (note: The joystick goes negative when pushed forwards, so negate it)
+                // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
+                // This way it's also easy to just drive straight, or just turn.
+                drive = -gamepad1.left_stick_y;
+                turn = gamepad1.right_stick_x;
 
-            // Normalize the values so neither exceed +/- 1.0
-            max = Math.max(Math.abs(left), Math.abs(right));
-            if (max > 1.0)
-            {
-                left /= max;
-                right /= max;
+                // Combine drive and turn for blended motion.
+                left = drive + turn;
+                right = drive - turn;
+
+                // Normalize the values so neither exceed +/- 1.0
+                max = Math.max(Math.abs(left), Math.abs(right));
+                if (max > 1.0) {
+                    left /= max;
+                    right /= max;
+                }
+
+                // Output the safe vales to the motor drives.
+                robot.leftDriveF.setPower(left);
+                robot.rightDriveF.setPower(right);
+                robot.leftDriveB.setPower(left);
+                robot.rightDriveB.setPower(right);
+
+                // Run wheels in POV mode g(note: The joystick goes negative when pushed forwards, so negate it)
+                // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
+                // This way it's also easy to just drive straight, or just turn.
+                /*double driveY = -gamepad1.left_stick_y;
+                double driveX = -gamepad1.left_stick_x;
+                turn = gamepad1.right_stick_x;
+
+                // Combine drive and turn for blended motion.
+                double leftFSpeed = driveX + driveY + turn;
+                double leftBSpeed = -driveX + driveY + turn;
+                double rightFSpeed = -driveX + driveY - turn;
+                double rightBSpeed = driveX + driveY - turn;
+
+                double max = Math.max(1.0, leftFSpeed);
+                max = Math.max(max, leftBSpeed);
+                max = Math.max(max, rightFSpeed);
+                max = Math.max(max, rightBSpeed);
+
+                leftFSpeed /= max;
+                leftBSpeed /= max;
+                rightFSpeed /= max;
+                rightBSpeed /= max;
+
+                robot.leftDriveF.setPower(leftFSpeed);
+                robot.leftDriveB.setPower(leftBSpeed);
+                robot.rightDriveF.setPower(rightFSpeed);
+                robot.rightDriveB.setPower(rightBSpeed);
+                Log.d(TAG, "leftFSpeed" + " " + leftFSpeed);
+                Log.d(TAG, "leftBSpeed" + " " + leftBSpeed);
+                Log.d(TAG, "rightFSpeed" + " " + rightFSpeed);
+                Log.d(TAG, "rightBSpeed" + " " + rightBSpeed);*/
+                // Output the safe vales to the motor drives.
+                // Use gamepad left & right Bumpers to open and close the claw
+                /*if (gamepad1.right_bumper)
+                    clawOffset += CLAW_SPEED;
+                else if (gamepad1.left_bumper)
+                    clawOffset -= CLAW_SPEED;*/
+            }
+            if (gamepad2.x) {
+                robot.droppingACube.setPosition(0.4);
+            } else if (gamepad2.y) {
+                robot.droppingACube.setPosition(0.75);
             }
 
-            // Output the safe vales to the motor drives.
-            robot.leftDriveF.setPower(left);
-            robot.rightDriveF.setPower(right);
-            robot.leftDriveB.setPower(left);
-            robot.rightDriveB.setPower(right);
-
-            // Run wheels in POV mode (note: The joystick goes negative when pushed forwards, so negate it)
-            // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
-            // This way it's also easy to just drive straight, or just turn.
-            /*double driveY = -gamepad1.left_stick_y;
-            double driveX = -gamepad1.left_stick_x;
-            turn = gamepad1.right_stick_x;
-
-            // Combine drive and turn for blended motion.
-            double leftFSpeed = driveX + driveY + turn;
-            double leftBSpeed = -driveX + driveY + turn;
-            double rightFSpeed = -driveX + driveY - turn;
-            double rightBSpeed = driveX + driveY - turn;
-
-            double max = Math.max(1.0, leftFSpeed);
-            max = Math.max(max, leftBSpeed);
-            max = Math.max(max, rightFSpeed);
-            max = Math.max(max, rightBSpeed);
-
-            leftFSpeed /= max;
-            leftBSpeed /= max;
-            rightFSpeed /= max;
-            rightBSpeed /= max;
-
-            robot.leftDriveF.setPower(leftFSpeed);
-            robot.leftDriveB.setPower(leftBSpeed);
-            robot.rightDriveF.setPower(rightFSpeed);
-            robot.rightDriveB.setPower(rightBSpeed);
-            Log.d(TAG, "leftFSpeed" + " " + leftFSpeed);
-            Log.d(TAG, "leftBSpeed" + " " + leftBSpeed);
-            Log.d(TAG, "rightFSpeed" + " " + rightFSpeed);
-            Log.d(TAG, "rightBSpeed" + " " + rightBSpeed);*/
-            // Output the safe vales to the motor drives.
-            // Use gamepad left & right Bumpers to open and close the claw
-            /*if (gamepad1.right_bumper)
-                clawOffset += CLAW_SPEED;
-            else if (gamepad1.left_bumper)
-                clawOffset -= CLAW_SPEED;*/
-
-            if (gamepad2.y) {
-                robot.putElementServo.setPosition(1);
-            } else if (gamepad2.a) {
-                robot.putElementServo.setPosition(-1);
-            }
-
-            if (gamepad2.dpad_up) {
-                robot.hiteElementServo.setPosition(1);
-            } else if (gamepad2.dpad_down) {
-                robot.hiteElementServo.setPosition(-1);
-            }
-
-            if (gamepad2.dpad_right) {
-                robot.angleElementServo.setPosition(1);
-            } else if (gamepad2.dpad_left) {
-                robot.angleElementServo.setPosition(-1);
-            }
 
             if (gamepad2.right_trigger == 1.0) {
                 robot.collectorMotor.setPower(0.6);
@@ -184,79 +178,68 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
                 robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
 
-            if (gamepad2.left_bumper) {
-                //robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.armMotor.setPower(0.4);
-                armMotorStart = true;
+            /*if (Math.abs(gamepad2.left_stick_y) > 0.2) {
+                robot.armMotor.setPower(gamepad2.left_stick_y);
+            }
+            else
+            {
+                robot.armMotor.setPower(0);
+                robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }*/
+
+            if (gamepad2.left_stick_y > 0.5)
+            {
+                robot.armMotor.setPower(0.7);
                 robot.armMotor.getCurrentPosition();
                 Log.d(TAG, "arm position is (left) " + " " + robot.armMotor.getCurrentPosition());
             }
-            else if (gamepad2.right_bumper) {
-                //robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.armMotor.setPower(-0.4);
-                armMotorStart = true;
+
+            else if (gamepad2.left_stick_y < -0.5)
+            {
+                robot.armMotor.setPower(-0.7);
                 robot.armMotor.getCurrentPosition();
                 Log.d(TAG, "arm position is (right) " + " " + robot.armMotor.getCurrentPosition());
+            }
+            else
+            {
+
+                robot.armMotor.setPower(-0.1);
+                robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }
+
+            if (gamepad2.right_stick_x > 0.5)
+            {
+                robot.turnArmMotor.setPower(-0.4);
+            }
+            else if (gamepad2.right_stick_x < -0.5)
+            {
+                robot.turnArmMotor.setPower(0.4);
+            }
+            else
+            {
+                robot.turnArmMotor.setPower(0);
+                robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }
+
+            /*if (Math.abs(gamepad2.right_stick_x) > 0.2)
+            {
+                robot.turnArmMotor.setPower(gamepad2.left_stick_x);
+            }
+            else
+            {
+                robot.turnArmMotor.setPower(0);
+
+            }*/
+
+
+            if (gamepad2.b) {
+                robot.carrouselMotor.setPower(-1.0);
+            } else if (gamepad2.a) {
+                robot.carrouselMotor.setPower(1.0);
             } else {
-                /*]
+                robot.carrouselMotor.setPower(0);
+            }
 
-                 */
-
-                /*if (armMotorStart == true) {
-                    if (armMotor_run_to_position == false) {
-                        armPosition = robot.armMotor.getCurrentPosition();
-                        if (armPosition < 0) {
-                            armPosition -= 100;
-                        } else {
-                            armPosition += 100;
-                        }
-                        Log.d(TAG, "Set arm Position to = " + " " + armPosition);
-                        robot.armMotor.setTargetPosition(armPosition);
-                        robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        armMotor_run_to_position = true;
-                    } else {
-                    /*
-                }
-                    if (robot.armMotor.isBusy() == false)
-                    {
-                    }
-                        Log.d(TAG, "armMotor not Busy"); */
-                       // armMotor_run_to_position = false;
-                        //robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                        //armMotorStart = false;
-                        //robot.armMotor.setPower(0);
-                    //}
-                    //else {
-                        //sleep(100);
-                        //robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                        //Log.d(TAG, "armMotor is Busy");
-                        //Log.d(TAG, "arm position is " + " " + robot.armMotor.getCurrentPosition());
-                      //  armMotorStart = false;
-                    //}
-
-                        robot.armMotor.setPower(-0.1);
-                        robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                    }
-
-                    if (gamepad1.x) {
-                        robot.carrouselMotor.setPower(-0.8);
-                    } else if (gamepad1.y) {
-                        robot.carrouselMotor.setPower(0.8);
-                    } else {
-                        robot.carrouselMotor.setPower(0);
-                    }
-
-                    if (gamepad1.right_bumper) {
-                        robot.sideDrive(0.8);
-                    } else if (gamepad1.left_bumper) {
-                        robot.sideDrive(-0.8);
-                    } else {
-                        robot.rightDriveF.setPower(0);
-                        robot.leftDriveF.setPower(0);
-                        robot.rightDriveB.setPower(0);
-                        robot.leftDriveB.setPower(0);
-
-                    }
 
                     // Move both servos to new position.  Assume servos are mirror image of each other.
                     //clawOffset = Range.clip(clawOffset, -0.5, 0.5);

@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -69,9 +70,10 @@ public class ConnectionHardware
     public DcMotor  armMotor = null;
     public DcMotor  carrouselMotor = null;
     public DcMotor  collectorMotor = null;
-    public Servo angleElementServo = null;
-    public Servo hiteElementServo = null;
-    public Servo putElementServo = null;
+    public DcMotor  turnArmMotor = null;
+    public Servo droppingACube = null;
+
+
     // The IMU sensor object
     private BNO055IMU imu;
 
@@ -104,15 +106,17 @@ public class ConnectionHardware
         armMotor = hwMap.get(DcMotor.class, "AM");
         carrouselMotor = hwMap.get(DcMotor.class, "CM");
         collectorMotor = hwMap.get(DcMotor.class, "CLM");
-        angleElementServo = hwMap.get(Servo.class, "AES");
-        hiteElementServo = hwMap.get(Servo.class, "HES");
-        putElementServo = hwMap.get(Servo.class, "PES");
+        turnArmMotor = hwMap.get(DcMotor.class, "TAM");
+        droppingACube = hwMap.get(Servo.class, "DAC");
+
 
         leftDriveF.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDriveF.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         leftDriveB.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightDriveB.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         armMotor.setDirection(DcMotor.Direction.FORWARD);
+        turnArmMotor.setDirection(DcMotor.Direction.FORWARD);
+
 
         leftDriveF.setPower(0);
         rightDriveF.setPower(0);
@@ -121,9 +125,8 @@ public class ConnectionHardware
         armMotor.setPower(0);
         carrouselMotor.setPower(0);
         collectorMotor.setPower(0);
-        angleElementServo.setPosition(0);
-        hiteElementServo.setPosition(0);
-        putElementServo.setPosition(0);
+        turnArmMotor.setPower(0);
+        droppingACube.setPosition(0.75);
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftDriveF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -131,6 +134,9 @@ public class ConnectionHardware
         leftDriveB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightDriveB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        turnArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        collectorMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
         leftDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -139,6 +145,7 @@ public class ConnectionHardware
         armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         carrouselMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         collectorMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        turnArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //servoDoorF.setPosition(ARM_HOME);
@@ -151,8 +158,12 @@ public class ConnectionHardware
         //rightClaw.setPosition(MID_SERVO);
 
         imu = hwMap.get(BNO055IMU.class, "imu ");
-        initImu();
-
+        boolean sucses = initImu();
+        if (sucses == false)
+        {
+            imu = hwMap.get(BNO055IMU.class, "imu1");
+            initImu();
+        }
 
         }
     public void sideDrive(double speed){
