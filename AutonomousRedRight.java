@@ -202,7 +202,8 @@ public class AutonomousRedRight extends LinearOpMode {
         Log.d(TAG, "armMotor position is (start)" + " " + robot.armMotor.getCurrentPosition());
         robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.armMotor.setPower(0.45);
-        while (opModeIsActive() && robot.armMotor.getCurrentPosition() < armTargetPosition)
+        runtime.reset();
+        while (opModeIsActive() && robot.armMotor.getCurrentPosition() < armTargetPosition && runtime.seconds() < 3)
         {
             Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
         }
@@ -231,7 +232,8 @@ public class AutonomousRedRight extends LinearOpMode {
             robot.collectorMotor.setPower(0.5);
         }
         Log.d(TAG, "collectorMotor position is " + " " + robot.collectorMotor.getCurrentPosition());
-        while (robot.collectorMotor.getCurrentPosition() < 1000)
+        runtime.reset();
+        while (robot.collectorMotor.getCurrentPosition() < 1000 && runtime.seconds() < 2)
         {
             robot.collectorMotor.getCurrentPosition();
             Log.d(TAG, "collectorMotor position is (wait) " + " " + robot.collectorMotor.getCurrentPosition());

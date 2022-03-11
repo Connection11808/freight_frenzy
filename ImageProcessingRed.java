@@ -100,7 +100,7 @@ public class ImageProcessingRed {
                 }
                 else if (i == 1)
                 {
-                    if (left > 350)
+                    if (left > 250)
                     {
                         Log.d(TAG, "The Duck in the center");
                         duckPosition = DuckPositionRed.CENTER;

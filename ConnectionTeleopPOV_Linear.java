@@ -168,6 +168,33 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
                 robot.droppingACube.setPosition(0.75);
             }
 
+            /*if (gamepad2.right_bumper) {
+                robot.turnArmMotor.setTargetPosition(200);
+                robot.turnArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.turnArmMotor.setPower(0.3);
+                Log.d(TAG, "turnArmMotor position is (start)" + " " + robot.turnArmMotor.getCurrentPosition());
+                robot.turnArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                while (opModeIsActive() && robot.turnArmMotor.getCurrentPosition() < 90 && getRuntime() < 1.5) {
+                    Log.d(TAG, "turnArmMotor position is (wait) " + " " + robot.turnArmMotor.getCurrentPosition());
+                }
+
+                robot.turnArmMotor.setPower(0);
+                sleep(500);
+                Log.d(TAG, "turnArmMotor position is (stop) " + " " + robot.turnArmMotor.getCurrentPosition());
+                robot.turnArmMotor.setTargetPosition(400);
+                robot.turnArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                robot.armMotor.getCurrentPosition();
+                Log.d(TAG, "armMotor position is (start)" + " " + robot.armMotor.getCurrentPosition());
+                robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                robot.armMotor.setPower(0.6);
+                while (opModeIsActive() && robot.armMotor.getCurrentPosition() < 400) {
+                    Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
+                }
+                robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                robot.armMotor.setPower(-0.1);
+                Log.d(TAG, "armMotor position is (stop) " + " " + robot.armMotor.getCurrentPosition());
+            }*/
+
 
             if (gamepad2.right_trigger == 1.0) {
                 robot.collectorMotor.setPower(0.6);
@@ -187,36 +214,25 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
                 robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }*/
 
-            if (gamepad2.left_stick_y > 0.5)
-            {
+            if (gamepad2.left_stick_y > 0.5) {
                 robot.armMotor.setPower(0.7);
                 robot.armMotor.getCurrentPosition();
                 Log.d(TAG, "arm position is (left) " + " " + robot.armMotor.getCurrentPosition());
-            }
-
-            else if (gamepad2.left_stick_y < -0.5)
-            {
+            } else if (gamepad2.left_stick_y < -0.5) {
                 robot.armMotor.setPower(-0.7);
                 robot.armMotor.getCurrentPosition();
                 Log.d(TAG, "arm position is (right) " + " " + robot.armMotor.getCurrentPosition());
-            }
-            else
-            {
+            } else {
 
                 robot.armMotor.setPower(-0.1);
                 robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
 
-            if (gamepad2.right_stick_x > 0.5)
-            {
+            if (gamepad2.right_stick_x > 0.5) {
                 robot.turnArmMotor.setPower(-0.4);
-            }
-            else if (gamepad2.right_stick_x < -0.5)
-            {
+            } else if (gamepad2.right_stick_x < -0.5) {
                 robot.turnArmMotor.setPower(0.4);
-            }
-            else
-            {
+            } else {
                 robot.turnArmMotor.setPower(0);
                 robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
@@ -241,24 +257,23 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
             }
 
 
-                    // Move both servos to new position.  Assume servos are mirror image of each other.
-                    //clawOffset = Range.clip(clawOffset, -0.5, 0.5);
+            // Move both servos to new position.  Assume servos are mirror image of each other.
+            //clawOffset = Range.clip(clawOffset, -0.5, 0.5);
 
-                    // Use gamepad buttons to move arm up (Y) and down (A)
+            // Use gamepad buttons to move arm up (Y) and down (A)
 
 
-                    // Send telemetry message to signify robot running;
+            // Send telemetry message to signify robot running;
             /*telemetry.addData("claw",  "Offset = %.2f", clawOffset);
             telemetry.addData("left",  "%.2f", left);
             telemetry.addData("right", "%.2f", right);
             telemetry.update();*/
 
 
-                    //Log.d("teleop", "claw" + "Offset = %.2f" + clawOffset);
-                    //Log.d("teleop", "left" + "%.2f" + left);
-                    //Log.d("teleop", "right" + "%.2f" + right);
-                    // Pace this loop so jaw action is reasonable
-                }
-            }
+            //Log.d("teleop", "claw" + "Offset = %.2f" + clawOffset);
+            //Log.d("teleop", "left" + "%.2f" + left);
+            //Log.d("teleop", "right" + "%.2f" + right);
+            // Pace this loop so jaw action is reasonable
         }
-
+    }
+}
