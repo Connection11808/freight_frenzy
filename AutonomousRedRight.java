@@ -5,12 +5,14 @@ package org.firstinspires.ftc.teamcode;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 @Autonomous(name="AutonomousRedRight", group="Pushbot")
+@Disabled
 public class AutonomousRedRight extends LinearOpMode {
 
     ImageProcessingRed imageProcessing = new ImageProcessingRed();
@@ -452,9 +454,9 @@ public class AutonomousRedRight extends LinearOpMode {
             robot.leftDriveB.setTargetPosition(newLeftBTarget);
             robot.rightDriveB.setTargetPosition(newRightBTarget);
 
-            robot.leftDriveF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.leftDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             robot.rightDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            robot.leftDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.leftDriveB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.rightDriveB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             // start motion.

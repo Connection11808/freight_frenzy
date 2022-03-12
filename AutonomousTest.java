@@ -11,9 +11,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@Autonomous(name="ConnectionAutonomous_Blue", group="Pushbot")
+@Autonomous(name="AutonomousTest", group="Pushbot")
 @Disabled
-public class ConnectionAutonomous_Blue extends LinearOpMode {
+public class AutonomousTest extends LinearOpMode {
 
     ImageProcessingBlue imageProcessing = new ImageProcessingBlue();
     PushbotAutoDriveByEncoder_Linear_Connection pushbotAutoDriveByEncoderLinearConnection = new PushbotAutoDriveByEncoder_Linear_Connection();
@@ -53,151 +53,300 @@ public class ConnectionAutonomous_Blue extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
-
+        robot.turnArmMotor.setPower(0);
+        robot.turnArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         telemetry.addData(">", "Robot start");
         telemetry.update();
+        //duckPosition = ImageProcessingRed.DuckPositionRed.CENTER;
         duckPosition = imageProcessing.FindDuckPosition();
-        //duckPosition = ImageProcessingRed.DuckPositionRed.LEFT;
+        duckPosition = ImageProcessingBlue.DuckPositionBlue.CENTER;
         telemetry.addData(">", "Robot start 1");
         telemetry.update();
-        Log.d(TAG, "DuckPosition = " + duckPosition);
+        /*Log.d(TAG, "DuckPosition = " + duckPosition);
         if (duckPosition == ImageProcessingBlue.DuckPositionBlue.LEFT) {
             telemetry.addLine("The Duck Position is Left");
             Log.d(TAG, "The Duck Position is Left");
-            driveToTheShippingHub(ImageProcessingRed.DuckPositionRed.LEFT);
-            putTheCubeOnTheShippingHub(ImageProcessingRed.DuckPositionRed.LEFT);
+            driveToTheShippingHub(ImageProcessingBlue.DuckPositionBlue.LEFT);
+            //sleep(1000);
+            //droppingCubeOnTheShippinghubWithTheArm(ImageProcessingRed.DuckPositionRed.LEFT);
+            //putTheCubeOnTheShippingHub(ImageProcessingRed.DuckPositionRed.LEFT);
             driveToTheCarrousel();
             driveToTheWarehouses();
+            //settlingInAWarehouse();
+
         }
 
         if (duckPosition == ImageProcessingBlue.DuckPositionBlue.CENTER) {
             telemetry.addLine("The Duck Position is Center");
             Log.d(TAG, "The Duck Position is Center");
-            driveToTheShippingHub(ImageProcessingRed.DuckPositionRed.CENTER);
-            putTheCubeOnTheShippingHub(ImageProcessingRed.DuckPositionRed.CENTER);
+            driveToTheShippingHub(ImageProcessingBlue.DuckPositionBlue.CENTER);
+            //sleep(1000);
+            //droppingCubeOnTheShippinghubWithTheArm(ImageProcessingRed.DuckPositionRed.LEFT);
+            //putTheCubeOnTheShippingHub(ImageProcessingRed.DuckPositionRed.CENTER);
             driveToTheCarrousel();
             driveToTheWarehouses();
+            //settlingInAWarehouse();
         }
         if (duckPosition == ImageProcessingBlue.DuckPositionBlue.RIGHT) {
             telemetry.addLine("The Duck Position is Right");
             Log.d(TAG, "The Duck Position is Right");
-            driveToTheShippingHub(ImageProcessingRed.DuckPositionRed.RIGHT);
-            putTheCubeOnTheShippingHub(ImageProcessingRed.DuckPositionRed.RIGHT);
+            driveToTheShippingHub(ImageProcessingBlue.DuckPositionBlue.RIGHT);
+            //droppingCubeOnTheShippinghubWithTheArm(ImageProcessingRed.DuckPositionRed.RIGHT);
+            //putTheCubeOnTheShippingHub(ImageProcessingRed.DuckPositionRed.RIGHT);
             driveToTheCarrousel();
             driveToTheWarehouses();
+            //settlingInAWarehouse();
+        }*/
+        telemetry.update();
+        //while(opModeIsActive());
+
+        int armTargetPosition  = 1000;
+        robot.armMotor.getCurrentPosition();
+        Log.d(TAG, "armMotor position is (start)" + " " + robot.armMotor.getCurrentPosition());
+        robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.armMotor.setPower(-0.8);
+        runtime.reset();
+        while (opModeIsActive() && robot.armMotor.getCurrentPosition() < armTargetPosition && runtime.seconds() < 8)
+        {
+            Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
         }
-
-        //gyroDrive(0.8, 100, 0);
-        /*gyroTurn(0.6,90);
-        gyroDrive(0.8, 150, 90);
-        gyroTurn(0.6,180);
-        gyroDrive(0.8, 150, 180);
-        gyroTurn(0.6, 270);
-        gyroDrive(-0.8, 150, 270);
-        gyroTurn(0.6, 0);*/
-            ;
-
-            telemetry.update();
-        /*gyroTurn(0.8, 90);
-        sleep(1000);
-        gyroTurn(0.8, 45);
-        sleep(1000);
-        gyroTurn(0.8, 22.5);*/
-
+        robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.armMotor.setPower(0);
 
             Log.d(TAG, "rightDriveF Motor position is =" + robot.rightDriveF.getCurrentPosition());
             Log.d(TAG, "leftDriveF Motor position is =" + robot.leftDriveF.getCurrentPosition());
             Log.d(TAG, "rightDriveB Motor position is =" + robot.rightDriveB.getCurrentPosition());
             Log.d(TAG, "leftDriveB Motor position is =" + robot.leftDriveB.getCurrentPosition());
-            //while (opModeIsActive());
-
         }
 
-    private void driveToTheShippingHub (ImageProcessingRed.DuckPositionRed duckPositionRed)
+    private void driveToTheShippingHub (ImageProcessingBlue.DuckPositionBlue duckPosition)
     {
         robot.collectorMotor.setPower(-0.2);
-        gyroDrive(1.0, 20, 0);
-        gyroTurn(0.6,90);
-        gyroDrive(1.0, 68, 90);
-        gyroTurn(0.6,0);
-        gyroTurn(0.6,0);
-        if (duckPositionRed == ImageProcessingRed.DuckPositionRed.RIGHT)
+        gyroDrive(1.0, 72, 0);
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.RIGHT)
         {
-            gyroDrive(1.0, 19, 0);
+            gyroDrive(1.0, 9, 0);
         }
-        else if (duckPositionRed == ImageProcessingRed.DuckPositionRed.CENTER)
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.LEFT) {
+            gyroDrive(1.0, 22, 0);
+        }
+        droppingCubeOnTheShippinghubWithTheArm(duckPosition);
+        gyroTurn(0.5, 0);
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.LEFT)
         {
-            gyroDrive(1.0, -5, 0);
+            robot.sideDrive(-0.5);
+            sleep(400);
+            robot.sideDrive(0);
         }
-        else
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.CENTER)
         {
-            gyroDrive(1.0, -7, 0);
+            robot.sideDrive(-0.5);
+            sleep(400);
+            robot.sideDrive(0);
         }
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.RIGHT)
+        {
+            //robot.sideDrive(-0.5);
+            //sleep(1000);
+            //robot.sideDrive(0);
+            gyroTurn(0.5, 0);
+            gyroDrive(1.0, -45, 0);
 
+        }
+        else {
+            if (duckPosition == ImageProcessingBlue.DuckPositionBlue.CENTER)
+            {
+                gyroDrive(1.0, -40, 0);
+            }
+
+            else {
+                gyroDrive(1.0, -37, 0);
+            }
+        }
     }
     private void driveToTheCarrousel ()
     {
-        gyroDrive(1.0, 36, 0);
-        gyroTurn(0.6, -90);
-        gyroDrive(1.0, -120, -90);
-        robot.sideDrive(1.0);
-        sleep(1300);
-        robot.sideDrive(0.0);
-        gyroTurn(0.6, -110);
-        //gyroTurn(0.6, -90);
-        //gyroDrive(1.0, -87,-90);
-        robot.carrouselMotor.setPower(0.6);
-        sleep(3500);
+        gyroTurn(0.5, 0);
+        gyroDrive(0.5, -57, 0);
+        gyroTurn(0.5, -90);
+        gyroDrive(0.5, -53, -90);
+        robot.carrouselMotor.setPower(0.75);
+        sleep(2900);
         robot.carrouselMotor.setPower(0.0);
-        gyroTurn(0.6, -90);
-        robot.sideDrive(-1.0);
-        sleep(920);
-        robot.sideDrive(0.0);
+
     }
 
     private void driveToTheWarehouses () {
-        gyroDrive(1.0, 215, -90);
-        //gyroTurn(0.6, 0);
-        //gyroDrive(0.8, 30 , 0);
-        //gyroTurn(0.6, 90);
-        //gyroTurn(0.6, 90);
-        //gyroDrive(0.8, 230, 90);
+        gyroTurn(0.5, -53);
+        gyroDrive(1.0, 35,-53);
+        gyroTurn(0.8, -90);
+        gyroDrive(1.0, 120, -90);
         driveOnTime();
     }
 
     private void driveOnTime ()
     {
-        robot.leftDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.rightDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.leftDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.rightDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.leftDriveF.setPower(1.0);
-        robot.leftDriveB.setPower(1.0);
-        robot.rightDriveF.setPower(1.0);
-        robot.rightDriveB.setPower(1.0);
-        sleep(2400);
-        robot.leftDriveF.setPower(0.0);
-        robot.leftDriveB.setPower(0.0);
-        robot.rightDriveF.setPower(0.0);
-        robot.rightDriveB.setPower(0.0);
-
-    }
-
-    private void putTheCubeOnTheShippingHub (ImageProcessingRed.DuckPositionRed duckPositionRed)
-    {
-        int armTargetPosition;
-        if (duckPositionRed == ImageProcessingRed.DuckPositionRed.LEFT)
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.LEFT)
         {
-            armTargetPosition = 1915;
+            robot.leftDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.rightDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.leftDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.rightDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.leftDriveF.setPower(0.8);
+            robot.leftDriveB.setPower(0.8);
+            robot.rightDriveF.setPower(0.8);
+            robot.rightDriveB.setPower(0.8);
+            sleep(1400);
+            robot.leftDriveF.setPower(0.0);
+            robot.leftDriveB.setPower(0.0);
+            robot.rightDriveF.setPower(0.0);
+            robot.rightDriveB.setPower(0.0);
         }
-        else if (duckPositionRed == ImageProcessingRed.DuckPositionRed.CENTER)
+        else {
+            robot.leftDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.rightDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.leftDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.rightDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.leftDriveF.setPower(0.8);
+            robot.leftDriveB.setPower(0.8);
+            robot.rightDriveF.setPower(0.8);
+            robot.rightDriveB.setPower(0.8);
+            sleep(1150);
+            robot.leftDriveF.setPower(0.0);
+            robot.leftDriveB.setPower(0.0);
+            robot.rightDriveF.setPower(0.0);
+            robot.rightDriveB.setPower(0.0);
+        }
+    }
+    private void droppingCubeOnTheShippinghubWithTheArm (ImageProcessingBlue.DuckPositionBlue duckPosition)
+    {
+        int armTargetPosition  = 1000;
+        gyroTurn(0.5, 180);
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.LEFT)
         {
-            armTargetPosition = 1750;
+
+            robot.sideDrive(0.6);
+            sleep(800);
+            robot.sideDrive(0);
+
+        }
+        robot.armMotor.getCurrentPosition();
+        Log.d(TAG, "armMotor position is (start)" + " " + robot.armMotor.getCurrentPosition());
+        robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.armMotor.setPower(0.7);
+        runtime.reset();
+        while (opModeIsActive() && robot.armMotor.getCurrentPosition() < armTargetPosition && runtime.seconds() < 8)
+        {
+            Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
+        }
+        robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.armMotor.setPower(0);
+        sleep(1000);
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.LEFT)
+        {
+            armTargetPosition = 1753;
+        }
+        else if (duckPosition == ImageProcessingBlue.DuckPositionBlue.CENTER)
+        {
+            armTargetPosition = 1535;
+            robot.sideDrive(0.5);
+            sleep(510);
+            robot.sideDrive(0);
         }
         else
         {
-            armTargetPosition = 1565;
+            armTargetPosition = 1240;
+            robot.sideDrive(-0.5);
+            sleep(600);
+            robot.sideDrive(0);
+            gyroTurn(0.5, 180);
         }
+        robot.armMotor.getCurrentPosition();
+        Log.d(TAG, "armMotor position is (start)" + " " + robot.armMotor.getCurrentPosition());
+        robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.armMotor.setPower(0.4);
+        runtime.reset();
+        while (opModeIsActive() && robot.armMotor.getCurrentPosition() < armTargetPosition && runtime.seconds() < 8)
+        {
+            Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
+        }
+        robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.armMotor.setPower(0);
+
+        Log.d(TAG, "armMotor position is (stop) " + " " + robot.armMotor.getCurrentPosition());
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.RIGHT)
+        {
+            robot.droppingACube.setPosition(-0.6);
+            robot.collectorMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.collectorMotor.setPower(0.3);
+        }
+        else if (duckPosition == ImageProcessingBlue.DuckPositionBlue.CENTER)
+        {
+
+            robot.sideDrive(-0.5);
+            sleep(715);
+            robot.sideDrive(0);
+            robot.collectorMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.collectorMotor.setPower(0.35);
+        }
+        else {
+            //robot.sideDrive(-0.5);
+            //sleep(1262);
+            //robot.sideDrive(0);
+            gyroTurn(0.5, 180);
+            robot.collectorMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.collectorMotor.setPower(1.0);
+        }
+        Log.d(TAG, "collectorMotor position is " + " " + robot.collectorMotor.getCurrentPosition());
+        runtime.reset();
+        while (robot.collectorMotor.getCurrentPosition() < 900 && runtime.seconds() < 2)
+        {
+            robot.collectorMotor.getCurrentPosition();
+            Log.d(TAG, "collectorMotor position is (wait) " + " " + robot.collectorMotor.getCurrentPosition());
+        }
+        robot.collectorMotor.setPower(0.0);
+        robot.droppingACube.setPosition(0.75);
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.CENTER)
+        {
+            robot.sideDrive(0.5);
+            sleep(1350);
+            robot.sideDrive(0);
+        }
+        sleep(1000);
+        robot.armMotor.getCurrentPosition();
+        Log.d(TAG, "armMotor position is (start)" + " " + robot.armMotor.getCurrentPosition());
+        robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.armMotor.setPower(-0.5);
+        while (opModeIsActive() && robot.armMotor.getCurrentPosition() > 0)
+        {
+            Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
+        }
+        robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.armMotor.setPower(0.0);
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.RIGHT)
+        {
+            robot.sideDrive(0.5);
+            sleep(750);
+            robot.sideDrive(0);
+        }
+    }
+    /*private void putTheCubeOnTheShippingHub (ImageProcessingBlue.DuckPositionBlue duckPositionBlue)
+    {
+        int armTargetPosition;
+        if (duckPositionBlue == ImageProcessingBlue.DuckPositionBlue.LEFT)
+        {
+            armTargetPosition = 1885
+            ;
+        }
+        else if (duckPositionBlue == ImageProcessingBlue.DuckPositionBlue.CENTER)
+        {
+            armTargetPosition = 1645;
+        }
+        else
+        {
+            armTargetPosition = 1460;
+        }
+ 
         robot.armMotor.getCurrentPosition();
         Log.d(TAG, "armMotor position is (start)" + " " + robot.armMotor.getCurrentPosition());
         robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -209,31 +358,107 @@ public class ConnectionAutonomous_Blue extends LinearOpMode {
         robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.armMotor.setPower(-0.1);
         Log.d(TAG, "armMotor position is (stop) " + " " + robot.armMotor.getCurrentPosition());
-        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.LEFT) {
-            gyroDrive(1.0, 12, 0);
+        if (duckPositionBlue == ImageProcessingBlue.DuckPositionBlue.LEFT) {
+            gyroDrive(1.0, 17, 0);
         }
-        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.CENTER) {
-            gyroDrive(1.0, 4, 0);
+        else if (duckPositionBlue == ImageProcessingBlue.DuckPositionBlue.CENTER) {
+            gyroDrive(1.0, 7, 0);
         }
-
         //robot.collectorMotor.setPower(0.37);
         //sleep(3500);
         //robot.collectorMotor.setPower(0);
         releaseTheCube();
-        robot.armMotor.setPower(-0.5);
-        sleep(2000);
-        robot.armMotor.setPower(0);
+        if (duckPositionBlue == ImageProcessingBlue.DuckPositionBlue.CENTER) {
+            robot.armMotor.setPower(-0.5);
+            sleep(3200);
+            robot.armMotor.setPower(0);
+        }
+        else if (duckPositionBlue == ImageProcessingBlue.DuckPositionBlue.LEFT) {
+            robot.armMotor.setPower(-0.5);
+            sleep(2800);
+            robot.armMotor.setPower(0);
+        }
+        else {
+            robot.armMotor.setPower(-0.5);
+            sleep(2000);
+            robot.armMotor.setPower(0);
+        }
+    }*/
+    private void settlingInAWarehouse ()
+    {
+        gyroTurn(0.5, 180);
+        int armTargetPosition;
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.LEFT)
+        {
+            armTargetPosition = 1150;
+        }
+        else if (duckPosition == ImageProcessingBlue.DuckPositionBlue.CENTER)
+        {
+            armTargetPosition = 1150;
+        }
+        else
+        {
+            armTargetPosition = 1150;
+        }
+
+        robot.armMotor.getCurrentPosition();
+        Log.d(TAG, "armMotor position is (start)" + " " + robot.armMotor.getCurrentPosition());
+        robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.armMotor.setPower(0.6);
+        while (opModeIsActive() && robot.armMotor.getCurrentPosition() < armTargetPosition)
+        {
+            Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
+        }
+        robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.armMotor.setPower(-0.1);
+        Log.d(TAG, "armMotor position is (stop) " + " " + robot.armMotor.getCurrentPosition());
+        robot.turnArmMotor.setTargetPosition(55);
+        robot.turnArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.turnArmMotor.setPower(0.25);
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.LEFT)
+        {
+            armTargetPosition = 1720;
+        }
+        else if (duckPosition == ImageProcessingBlue.DuckPositionBlue.CENTER)
+        {
+            armTargetPosition = 1720;
+        }
+        else
+        {
+            armTargetPosition = 1720;
+        }
+
+        robot.armMotor.getCurrentPosition();
+        Log.d(TAG, "armMotor position is (start)" + " " + robot.armMotor.getCurrentPosition());
+        robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.armMotor.setPower(0.6);
+        while (opModeIsActive() && robot.armMotor.getCurrentPosition() < armTargetPosition)
+        {
+            Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
+        }
+        robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.armMotor.setPower(-0.1);
+        Log.d(TAG, "armMotor position is (stop) " + " " + robot.armMotor.getCurrentPosition());
     }
 
     private void releaseTheCube () {
         robot.collectorMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.collectorMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.collectorMotor.setTargetPosition(640);
+        robot.collectorMotor.setTargetPosition(770);
         robot.collectorMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         runtime.reset();
-        robot.collectorMotor.setPower(0.2);
+        if (duckPosition == ImageProcessingBlue.DuckPositionBlue.LEFT) {
+            robot.collectorMotor.setPower(0.7);
+        }
+        else if (duckPosition == ImageProcessingBlue.DuckPositionBlue.CENTER) {
+            robot.collectorMotor.setPower(0.3);
+        }
+        else
+        {
+            robot.collectorMotor.setPower(0.3);
+        }
         while (opModeIsActive() &&
-                (runtime.seconds() < 1.5) &&
+                (runtime.seconds() < 2.5) &&
                 (robot.collectorMotor.isBusy())) {
             Log.d(TAG, "collectorMotor is " + " " + robot.collectorMotor.getCurrentPosition());
         }
@@ -249,6 +474,7 @@ public class ConnectionAutonomous_Blue extends LinearOpMode {
     }
     public void gyroTurn (  double speed, double angle) {
         angle = -angle;
+        runtime.reset();
         // keep looping while we are still active, and not on heading.
         while (opModeIsActive() && !onHeading(speed, angle, P_TURN_COEFF)) {
             // Updates telemetry & Allow time for other processes to run.
@@ -267,7 +493,7 @@ public class ConnectionAutonomous_Blue extends LinearOpMode {
         // determine turn power based on +/- error
         error = getError(angle);
 
-        if (Math.abs(error) <= HEADING_THRESHOLD) {
+        if ((Math.abs(error) <= HEADING_THRESHOLD) || (runtime.seconds() > 3)) {
             steer = 0.0;
             leftSpeed  = 0.0;
             rightSpeed = 0.0;
@@ -358,12 +584,12 @@ public class ConnectionAutonomous_Blue extends LinearOpMode {
             // Set Target and Turn On RUN_TO_POSITION
             //robot.leftDriveF.setTargetPosition(newLeftFTarget);
             //robot.rightDriveF.setTargetPosition(newRightTarget);
-            //robot.leftDriveB.setTargetPosition(newLeftBTarget);
-            //robot.rightDriveB.setTargetPosition(newRightTarget);
+            robot.leftDriveB.setTargetPosition(newLeftBTarget);
+            robot.rightDriveB.setTargetPosition(newRightBTarget);
 
-            robot.leftDriveF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.leftDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             robot.rightDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            robot.leftDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.leftDriveB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.rightDriveB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             // start motion.
@@ -457,7 +683,8 @@ public class ConnectionAutonomous_Blue extends LinearOpMode {
                 Log.d(TAG, "Err/St" + " " + error + " " + steer);
                 Log.d(TAG, "Target" + " " + newLeftBTarget + " " + newRightBTarget);
                 Log.d(TAG, "Actual" + " " + robot.rightDriveB.getCurrentPosition() + " " + robot.leftDriveB.getCurrentPosition());
-                Log.d(TAG, "Actual" + " " + robot.leftDriveB.getCurrentPosition() + " " + robot.rightDriveB.getCurrentPosition());
+                Log.d(TAG, "Actual" + " " + robot.leftDriveF.getCurrentPosition() + " " + robot.rightDriveF.getCurrentPosition());
+                Log.d(TAG, "Rang" + " " + rangRightDriveB + " " + rangLeftDriveB);
                 Log.d(TAG, "Speed" + " " + leftSpeed + " " + rightSpeed);
             }
 

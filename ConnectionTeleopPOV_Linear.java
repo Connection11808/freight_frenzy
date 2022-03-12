@@ -62,6 +62,7 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
     double clawOffset = 0;                       // Servo mid position
     final double CLAW_SPEED = 0.02;// sets rate to move servo
     public String TAG = "teleop";
+    double maxSpeed = 0.8;
 
     @Override
     public void runOpMode() {
@@ -116,6 +117,30 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
                 if (max > 1.0) {
                     left /= max;
                     right /= max;
+                }
+
+                if (Math.abs(left) > maxSpeed)
+                {
+                    if (left > 0)
+                    {
+                        left = maxSpeed;
+                    }
+                    else
+                    {
+                        left = -maxSpeed;
+                    }
+                }
+
+                if (Math.abs(right) > maxSpeed)
+                {
+                    if (right > 0)
+                    {
+                        right = maxSpeed;
+                    }
+                    else
+                    {
+                        right = -maxSpeed;
+                    }
                 }
 
                 // Output the safe vales to the motor drives.
@@ -195,6 +220,11 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
                 Log.d(TAG, "armMotor position is (stop) " + " " + robot.armMotor.getCurrentPosition());
             }*/
 
+            if (gamepad1.x) {
+                maxSpeed = 1.0;
+            } else if (gamepad1.y) {
+                maxSpeed = 0.8;
+            }
 
             if (gamepad2.right_trigger == 1.0) {
                 robot.collectorMotor.setPower(0.6);
@@ -215,16 +245,15 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
             }*/
 
             if (gamepad2.left_stick_y > 0.5) {
-                robot.armMotor.setPower(0.7);
+                robot.armMotor.setPower(-0.7);
                 robot.armMotor.getCurrentPosition();
                 Log.d(TAG, "arm position is (left) " + " " + robot.armMotor.getCurrentPosition());
             } else if (gamepad2.left_stick_y < -0.5) {
-                robot.armMotor.setPower(-0.7);
+                robot.armMotor.setPower(0.7);
                 robot.armMotor.getCurrentPosition();
                 Log.d(TAG, "arm position is (right) " + " " + robot.armMotor.getCurrentPosition());
             } else {
-
-                robot.armMotor.setPower(-0.1);
+                robot.armMotor.setPower(0.1);
                 robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
 

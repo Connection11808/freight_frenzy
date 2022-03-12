@@ -585,9 +585,9 @@ public class AutonomousBlueStorageUnit extends LinearOpMode {
             robot.leftDriveB.setTargetPosition(newLeftBTarget);
             robot.rightDriveB.setTargetPosition(newRightBTarget);
 
-            robot.leftDriveF.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.leftDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             robot.rightDriveF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-            robot.leftDriveB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.leftDriveB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.rightDriveB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             // start motion.
