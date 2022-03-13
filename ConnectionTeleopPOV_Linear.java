@@ -253,7 +253,7 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
                 robot.armMotor.getCurrentPosition();
                 Log.d(TAG, "arm position is (right) " + " " + robot.armMotor.getCurrentPosition());
             } else {
-                robot.armMotor.setPower(0.1);
+                robot.armMotor.setPower(-0.1);
                 robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             }
 

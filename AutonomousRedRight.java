@@ -210,7 +210,7 @@ public class AutonomousRedRight extends LinearOpMode {
             Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
         }
         robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.armMotor.setPower(-0.1);
+        robot.armMotor.setPower(0);
         Log.d(TAG, "armMotor position is (stop) " + " " + robot.armMotor.getCurrentPosition());
         if (duckPositionRed == ImageProcessingRed.DuckPositionRed.RIGHT)
         {

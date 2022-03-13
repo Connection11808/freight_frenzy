@@ -56,6 +56,7 @@ import java.util.*;
  * is explained below.
  */
 @Autonomous(name = "Concept: TensorFlow Object Detection Webcam_Connection", group = "Concept")
+@Disabled
 public class ConceptTensorFlowObjectDetectionWebcam_Connection extends LinearOpMode {
 
   /* Note: This sample uses the all-objects Tensor Flow model (FreightFrenzy_BCDM.tflite), which contains

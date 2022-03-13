@@ -107,7 +107,7 @@ public class AutonomousRedWarehouse extends LinearOpMode {
     private void driveToTheShippingHub (ImageProcessingRed.DuckPositionRed duckPositionRed)
     {
         robot.collectorMotor.setPower(-0.2);
-        gyroDrive(1.0, 41, 0);
+        gyroDrive(1.0, 36, 0);
         if (duckPosition == ImageProcessingRed.DuckPositionRed.RIGHT)
         {
             gyroDrive(1.0, 2, 0);
@@ -161,7 +161,7 @@ public class AutonomousRedWarehouse extends LinearOpMode {
 
     private void driveToTheWarehouses () {
         gyroTurn(0.5, 53);
-        gyroDrive(1.0, 34,53);
+        gyroDrive(1.0, 29,53);
         gyroTurn(0.8, 90);
         gyroDrive(1.0, 120, 90);
         driveOnTime();
@@ -223,7 +223,7 @@ public class AutonomousRedWarehouse extends LinearOpMode {
             Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
         }
         robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.armMotor.setPower(-0.1);
+        robot.armMotor.setPower(0);
         if (duckPositionRed == ImageProcessingRed.DuckPositionRed.LEFT)
         {
             armTargetPosition = 2050;
@@ -234,9 +234,9 @@ public class AutonomousRedWarehouse extends LinearOpMode {
         }
         else
         {
-            armTargetPosition = 1275;
+            armTargetPosition = 1390;
             robot.sideDrive(-0.5);
-            sleep(850);
+            sleep(500);
             robot.sideDrive(0);
             gyroTurn(0.5,0);
         }
@@ -250,7 +250,7 @@ public class AutonomousRedWarehouse extends LinearOpMode {
             Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
         }
         robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.armMotor.setPower(-0.1);
+        robot.armMotor.setPower(0);
 
         Log.d(TAG, "armMotor position is (stop) " + " " + robot.armMotor.getCurrentPosition());
         if (duckPositionRed == ImageProcessingRed.DuckPositionRed.RIGHT)
@@ -299,7 +299,7 @@ public class AutonomousRedWarehouse extends LinearOpMode {
         robot.armMotor.getCurrentPosition();
         Log.d(TAG, "armMotor position is (start)" + " " + robot.armMotor.getCurrentPosition());
         robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.armMotor.setPower(-0.5);
+        robot.armMotor.setPower(-0.4);
         while (opModeIsActive() && robot.armMotor.getCurrentPosition() > 0)
         {
             Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());

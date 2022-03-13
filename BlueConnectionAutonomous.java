@@ -5,12 +5,14 @@ package org.firstinspires.ftc.teamcode;
 import android.util.Log;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 @Autonomous(name="BlueConnectionAutonomous", group="Pushbot")
+@Disabled
 public class BlueConnectionAutonomous extends LinearOpMode {
 
     ImageProcessingBlue imageProcessing = new ImageProcessingBlue();

@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@Autonomous(name="AutonomousBlueWarehouse", group="Pushbot")
-public class AutonomousBlueWarehouse extends LinearOpMode {
+@Autonomous(name="AutonomousWarehouse", group="Pushbot")
+public class AutonomousWarehouse extends LinearOpMode {
 
     ImageProcessingBlue imageProcessing = new ImageProcessingBlue();
     PushbotAutoDriveByEncoder_Linear_Connection pushbotAutoDriveByEncoderLinearConnection = new PushbotAutoDriveByEncoder_Linear_Connection();
@@ -60,15 +60,15 @@ public class AutonomousBlueWarehouse extends LinearOpMode {
         //duckPosition = ImageProcessingBlue.DuckPositionBlue.CENTER;
         telemetry.addData(">", "Robot start 1");
         telemetry.update();
-        Log.d(TAG, "DuckPosition = " + duckPosition);
+        /*Log.d(TAG, "DuckPosition = " + duckPosition);
         if (duckPosition == ImageProcessingBlue.DuckPositionBlue.LEFT) {
             telemetry.addLine("The Duck Position is Left");
             Log.d(TAG, "The Duck Position is Left");
-            driveToTheShippingHub(ImageProcessingBlue.DuckPositionBlue.LEFT);
+            //driveToTheShippingHub(ImageProcessingBlue.DuckPositionBlue.LEFT);
             //sleep(1000);
             //droppingCubeOnTheShippinghubWithTheArm(ImageProcessingRed.DuckPositionRed.LEFT);
             //putTheCubeOnTheShippingHub(ImageProcessingRed.DuckPositionRed.LEFT);
-            driveToTheCarrousel();
+            //driveToTheCarrousel();
             driveToTheWarehouses();
             //settlingInAWarehouse();
 
@@ -94,9 +94,11 @@ public class AutonomousBlueWarehouse extends LinearOpMode {
             driveToTheCarrousel();
             driveToTheWarehouses();
             //settlingInAWarehouse();
-        }
+        }*/
         telemetry.update();
         //while(opModeIsActive());
+
+        gyroDrive(0.6, -75, 0);
 
             Log.d(TAG, "rightDriveF Motor position is =" + robot.rightDriveF.getCurrentPosition());
             Log.d(TAG, "leftDriveF Motor position is =" + robot.leftDriveF.getCurrentPosition());
@@ -226,7 +228,7 @@ public class AutonomousBlueWarehouse extends LinearOpMode {
             Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
         }
         robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.armMotor.setPower(0);
+        robot.armMotor.setPower(0.1);
         //sleep(1000);
         if (duckPosition == ImageProcessingBlue.DuckPositionBlue.LEFT)
         {
@@ -257,7 +259,7 @@ public class AutonomousBlueWarehouse extends LinearOpMode {
             Log.d(TAG, "armMotor position is (wait) " + " " + robot.armMotor.getCurrentPosition());
         }
         robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.armMotor.setPower(0);
+        robot.armMotor.setPower(0.1);
 
         Log.d(TAG, "armMotor position is (stop) " + " " + robot.armMotor.getCurrentPosition());
         if (duckPosition == ImageProcessingBlue.DuckPositionBlue.RIGHT)
