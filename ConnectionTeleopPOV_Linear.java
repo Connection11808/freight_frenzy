@@ -258,9 +258,9 @@ public class ConnectionTeleopPOV_Linear extends LinearOpMode {
             }
 
             if (gamepad2.right_stick_x > 0.5) {
-                robot.turnArmMotor.setPower(-0.4);
+                robot.turnArmMotor.setPower(-0.5);
             } else if (gamepad2.right_stick_x < -0.5) {
-                robot.turnArmMotor.setPower(0.4);
+                robot.turnArmMotor.setPower(0.5);
             } else {
                 robot.turnArmMotor.setPower(0);
                 robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
